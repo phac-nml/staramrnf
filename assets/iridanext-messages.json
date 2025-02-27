@@ -1,0 +1,24 @@
+{
+    "overrides": {
+        "definitions": {
+            "input_output_options": {
+                "description": {
+                    "en": "Define where the pipeline should find input data and save output data.",
+                    "fr": "Définir où le pipeline doit trouver les données d’entrée et sauvegarder les données de sortie."
+                }
+            },
+            "additional_settings": {
+                "description": {
+                    "en": "For advanced changes to staramr",
+                    "fr": "Pour les changements avancés au staramr"
+                }
+            },
+            "databases": {
+                "description": {
+                    "en": "Select databases to be run on all samples.",
+                    "fr": "Sélectionner les bases de données à exécuter sur tous les échantillons."
+                }
+            }
+        }
+    }
+}
