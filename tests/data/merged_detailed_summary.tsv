@@ -1,4 +1,7 @@
 Isolate ID	Data	Data Type	Predicted Phenotype	CGE Predicted Phenotype	%Identity	%Overlap	HSP Length/Total Length	Contig	Start	End	Accession
+B2_GCF_000196035	ST35 (listeria_2)	MLST									
+B2_GCF_000196035	None	Plasmid									
+B2_GCF_000196035	fosX	Resistance	fosfomycin	Fosfomycin	100.0	100.0	402/402	ref|NC_003210.1|	1765900	1765499	AL591981
 A_1_	ST66 (senterica_achtman_2)	MLST									
 A_1_	IncFIB(K)	Plasmid			98.93	100.0	560/560	gb|AY509004.1|	118238	117679	JN233704
 A_1_	IncFIB(S)	Plasmid			98.76	100.0	643/643	gb|AY509003.1|	15798	16440	FN432031
@@ -14,7 +17,6 @@ A_1_	cmlA1	Resistance	chloramphenicol	Chloramphenicol	99.92	100.0	1260/1260	gb|A
 A_1_	dfrA12	Resistance	trimethoprim	Trimethoprim	100.0	100.0	498/498	gb|AY509004.1|	24578	25075	AM040708
 A_1_	gyrA (D87N)	Resistance	ciprofloxacin I/R, nalidixic acid	Nalidixic acid,Ciprofloxacin	98.75	100.0	2637/2637	gb|AE017220.1|	2390630	2387994	
 A_1_	gyrA (S83F)	Resistance	ciprofloxacin I/R, nalidixic acid	Nalidixic acid,Ciprofloxacin	98.75	100.0	2637/2637	gb|AE017220.1|	2390630	2387994	
-A_1_	qacE	Resistance	unknown[qacE_1_X68232]	Benzylkonium Chloride, Ethidium Bromide, Chlorhexidine, Cetylpyridinium Chloride	100.0	84.68	282/333	gb|AY509004.1|	26438	26719	X68232
 A_1_	sul1	Resistance	sulfisoxazole	Sulfamethoxazole	100.0	100.0	840/840	gb|AY509004.1|	26779	27618	U12338
 A_1_	sul3	Resistance	sulfisoxazole	Sulfamethoxazole	100.0	100.0	792/792	gb|AY509004.1|	37250	38041	AJ459418
 A_1_	tet(A)	Resistance	tetracycline	Doxycycline, Tetracycline	100.0	100.0	1200/1200	gb|AY509004.1|	3713	2514	AJ517790
@@ -26,13 +28,9 @@ B2	blaCTX-M-15	Resistance	ampicillin, ceftriaxone	Amoxicillin, Ampicillin, Aztre
 B2	blaTEM-1B	Resistance	ampicillin	Amoxicillin, Ampicillin, Cephalothin, Piperacillin, Ticarcillin	99.88	100.0	861/861	gb|JRKE01000059.1|	2680	1820	AY458016
 B2	dfrA7	Resistance	trimethoprim	Trimethoprim	100.0	100.0	474/474	gb|JRKE01000132.1|	1841	1368	AB161450
 B2	gyrA (S83A)	Resistance	ciprofloxacin I/R, nalidixic acid	Nalidixic acid,Ciprofloxacin	99.28	100.0	2628/2628	gb|JRKE01000028.1|	10028	12655	
-B2	qacE	Resistance	unknown[qacE_1_X68232]	Benzylkonium Chloride, Ethidium Bromide, Chlorhexidine, Cetylpyridinium Chloride	99.65	85.59	285/333	gb|JRKE01000132.1|	1138	854	X68232
 B2	sul1	Resistance	sulfisoxazole	Sulfamethoxazole	100.0	91.91	761/828	gb|JRKE01000132.1|	797	37	AY522923
 B2	sul2	Resistance	sulfisoxazole	Sulfamethoxazole	100.0	100.0	816/816	gb|JRKE01000065.1|	2560	1745	HQ840942
 B2	tet(A)	Resistance	tetracycline	Doxycycline, Tetracycline	100.0	100.0	1200/1200	gb|JRKE01000131.1|	1882	3081	AJ517790
-B2_GCF_000196035	ST35 (listeria_2)	MLST									
-B2_GCF_000196035	None	Plasmid									
-B2_GCF_000196035	fosX	Resistance	fosfomycin	Fosfomycin	100.0	100.0	402/402	ref|NC_003210.1|	1765900	1765499	AL591981
 GCF_000196035_B	ST35 (listeria_2)	MLST									
 GCF_000196035_B	None	Plasmid									
 GCF_000196035_B	fosX	Resistance	fosfomycin	Fosfomycin	100.0	100.0	402/402	ref|NC_003210.1|	1765900	1765499	AL591981

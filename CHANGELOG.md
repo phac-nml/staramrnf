@@ -3,7 +3,13 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Development
+## [0.3.0] - 2025-03-20
+
+### `Update`
+
+- starAMR version was updated from `0.10.0` to [0.11.0](https://github.com/phac-nml/staramr/releases/tag/0.11.0). [PR#30](https://github.com/phac-nml/staramrnf/pull/30)
+  - Resfinder database to use the 2024-08-06 release
+  - Pointfinder database to use the 2024-08-08 release
 
 ## [0.2.0] - 2024-09-20
 
@@ -25,5 +31,6 @@ staramrnf follows the `nf-core` pipeline file structure and used the nf-core [te
 [pointfinder-db]: https://bitbucket.org/genomicepidemiology/pointfinder_db
 [plasmidfinder-db]: https://bitbucket.org/genomicepidemiology/plasmidfinder_db
 [resfinder-web]: http://genepi.food.dtu.dk/resfinder
-[0.2.0]: https://github.com/phac-nml/staramrnf/releases/tag/0.2.0
 [0.1.0]: https://github.com/phac-nml/staramrnf/releases/tag/0.1.0
+[0.2.0]: https://github.com/phac-nml/staramrnf/releases/tag/0.2.0
+[0.3.0]: https://github.com/phac-nml/staramrnf/releases/tag/0.3.0

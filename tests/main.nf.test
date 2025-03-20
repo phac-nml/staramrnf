@@ -27,9 +27,9 @@ nextflow_pipeline {
             // Salmonella tests
             def salmonella_metadata = iridanext_metadata.GCA_000008105
             assert salmonella_metadata."StarAMR Quality Module" == "Passed"
-            assert salmonella_metadata."StarAMR Predicted Phenotype" == "streptomycin, kanamycin, ampicillin, amoxicillin/clavulanic acid, cefoxitin, ceftriaxone, chloramphenicol, trimethoprim, ciprofloxacin I/R, nalidixic acid, unknown[qacE_1_X68232], sulfisoxazole, tetracycline"
-            assert salmonella_metadata."StarAMR CGE Predicted Phenotype" == "Spectinomycin, Streptomycin, Neomycin, Kanamycin, Lividomycin, Paromomycin, Ribostamycin, Amoxicillin, Amoxicillin+Clavulanic acid, Ampicillin, Ampicillin+Clavulanic acid, Cefotaxime, Cefoxitin, Ceftazidime, Piperacillin, Piperacillin+Tazobactam, Ticarcillin, Ticarcillin+Clavulanic acid, Cephalothin, Chloramphenicol, Trimethoprim, Nalidixic acid, Ciprofloxacin, Benzylkonium Chloride, Ethidium Bromide, Chlorhexidine, Cetylpyridinium Chloride, Sulfamethoxazole, Doxycycline, Tetracycline"
-            assert salmonella_metadata."StarAMR Genotype" == "aadA1, aadA2, aadA2, aph(3'')-Ib, aph(3')-Ia, blaCMY-2, blaTEM-1B, cmlA1, dfrA12, gyrA (D87N), gyrA (S83F), qacE, sul1, sul3, tet(A)"
+            assert salmonella_metadata."StarAMR Predicted Phenotype" == "streptomycin, kanamycin, ampicillin, amoxicillin/clavulanic acid, cefoxitin, ceftriaxone, chloramphenicol, trimethoprim, ciprofloxacin I/R, nalidixic acid, sulfisoxazole, tetracycline"
+            assert salmonella_metadata."StarAMR CGE Predicted Phenotype" == "Spectinomycin, Streptomycin, Neomycin, Kanamycin, Lividomycin, Paromomycin, Ribostamycin, Amoxicillin, Amoxicillin+Clavulanic acid, Ampicillin, Ampicillin+Clavulanic acid, Cefotaxime, Cefoxitin, Ceftazidime, Piperacillin, Piperacillin+Tazobactam, Ticarcillin, Ticarcillin+Clavulanic acid, Cephalothin, Chloramphenicol, Trimethoprim, Nalidixic acid, Ciprofloxacin, Sulfamethoxazole, Doxycycline, Tetracycline"
+            assert salmonella_metadata."StarAMR Genotype" == "aadA1, aadA2, aadA2, aph(3'')-Ib, aph(3')-Ia, blaCMY-2, blaTEM-1B, cmlA1, dfrA12, gyrA (D87N), gyrA (S83F), sul1, sul3, tet(A)"
             assert salmonella_metadata."StarAMR Plasmid" == "IncFIB(K), IncFIB(S), IncFII(S)"
             assert salmonella_metadata."StarAMR Scheme" == "senterica_achtman_2"
             assert salmonella_metadata."StarAMR Sequence Type" == "66"
@@ -51,9 +51,9 @@ nextflow_pipeline {
             // E coli tests
             def ecoli_metadata = iridanext_metadata.GCA_000947975
             assert ecoli_metadata."StarAMR Quality Module" == "Passed"
-            assert ecoli_metadata."StarAMR Predicted Phenotype" == "streptomycin, kanamycin, ampicillin, ceftriaxone, trimethoprim, ciprofloxacin I/R, nalidixic acid, unknown[qacE_1_X68232], sulfisoxazole, tetracycline"
-            assert ecoli_metadata."StarAMR CGE Predicted Phenotype" == "Streptomycin, Amoxicillin, Ampicillin, Aztreonam, Cefepime, Cefotaxime, Ceftazidime, Ceftriaxone, Piperacillin, Ticarcillin, Cephalothin, Trimethoprim, Nalidixic acid, Ciprofloxacin, Benzylkonium Chloride, Ethidium Bromide, Chlorhexidine, Cetylpyridinium Chloride, Sulfamethoxazole, Doxycycline, Tetracycline"
-            assert ecoli_metadata."StarAMR Genotype" == "aph(3'')-Ib, aph(6)-Id, blaCTX-M-15, blaTEM-1B, dfrA7, gyrA (S83A), qacE, sul1, sul2, tet(A)"
+            assert ecoli_metadata."StarAMR Predicted Phenotype" == "streptomycin, kanamycin, ampicillin, ceftriaxone, trimethoprim, ciprofloxacin I/R, nalidixic acid, sulfisoxazole, tetracycline"
+            assert ecoli_metadata."StarAMR CGE Predicted Phenotype" == "Streptomycin, Amoxicillin, Ampicillin, Aztreonam, Cefepime, Cefotaxime, Ceftazidime, Ceftriaxone, Piperacillin, Ticarcillin, Cephalothin, Trimethoprim, Nalidixic acid, Ciprofloxacin, Sulfamethoxazole, Doxycycline, Tetracycline"
+            assert ecoli_metadata."StarAMR Genotype" == "aph(3'')-Ib, aph(6)-Id, blaCTX-M-15, blaTEM-1B, dfrA7, gyrA (S83A), sul1, sul2, tet(A)"
             assert ecoli_metadata."StarAMR Plasmid" == "IncQ1"
             assert ecoli_metadata."StarAMR Scheme" == "ecoli_achtman_4"
             assert ecoli_metadata."StarAMR Sequence Type" == "678"
