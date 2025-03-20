@@ -31,5 +31,6 @@ staramrnf follows the `nf-core` pipeline file structure and used the nf-core [te
 [pointfinder-db]: https://bitbucket.org/genomicepidemiology/pointfinder_db
 [plasmidfinder-db]: https://bitbucket.org/genomicepidemiology/plasmidfinder_db
 [resfinder-web]: http://genepi.food.dtu.dk/resfinder
-[0.2.0]: https://github.com/phac-nml/staramrnf/releases/tag/0.2.0
 [0.1.0]: https://github.com/phac-nml/staramrnf/releases/tag/0.1.0
+[0.2.0]: https://github.com/phac-nml/staramrnf/releases/tag/0.2.0
+[0.3.0]: https://github.com/phac-nml/staramrnf/releases/tag/0.3.0
