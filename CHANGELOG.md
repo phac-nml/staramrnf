@@ -11,7 +11,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Resfinder database to use the 2024-08-06 release
   - Pointfinder database to use the 2024-08-08 release
 
-
 ## [0.2.0] - 2024-09-20
 
 The pipeline has been modified to accept an input (samplesheet) with an optional `sample_name` column. The goal of the `sample_name` is to allow for IRIDA-Next users to modify their output filenames and sample names. Previously, all files and samples were named using the IRIDA-Next ID (for which users do not chose). This modification will not impact the running locally of `staramrnf` because if `sample_name` column is absent (as was the case prior to the release) then the `sample` column will behave as it had previously.
