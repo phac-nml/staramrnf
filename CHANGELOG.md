@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### `Changed`
+
+- Adding GitHub CI tests against Nextflow `24.10.3`. [PR #33](https://github.com/phac-nml/staramrnf/pull/33)
+
 ## [0.3.0] - 2025-03-20
 
 ### `Update`
