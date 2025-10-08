@@ -1,0 +1,30 @@
+nextflow_process {
+    name "Test Process STARAMR_SEARCH"
+    script "modules/local/staramr/main.nf"
+    process "STARAMR_SEARCH"
+
+    test("Test when STARAMR_SEARCH runs on fasta files with long headers (50+ characters)") {
+        tag "STARAMR_SEARCH_long_header"
+        when {
+            process {
+                """
+                input[0] = Channel.of(
+                    [[irida_id:"test1", id:"test2", species:"Salmonella"], "$baseDir/tests/genomes/misc/long-header.fasta"])
+                """
+            }
+
+            params {
+                outdir = "results"
+            }
+        }
+
+        then {
+            assert process.success
+            // Check the output
+            //assert path("$baseDir/tests/results/staramr/test1_results/test1_summary.staramr.txt").exists()
+            //def test1_summary = new File("$baseDir/tests/results/staramr/test1_results/test1_summary.staramr.txt")
+            //def test1_summary_text = stest1_summary.readLines().get(1)
+            //assert test1_summary_text == "small"
+        }
+    }
+}
