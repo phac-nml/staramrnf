@@ -3,7 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.3.1] - 2025-10-08
+
+### `Update`
+
+- Updated the starAMR version to [0.11.1](https://github.com/phac-nml/staramr/releases/tag/0.11.1):
+  - Removed `parse_seqids` from `makeblastdb` command. Fixes issue with contig headers greater than 50 characters. [PR #225](https://github.com/phac-nml/staramr/pull/225)
 
 ### `Changed`
 
@@ -40,3 +45,4 @@ staramrnf follows the `nf-core` pipeline file structure and used the nf-core [te
 [0.1.0]: https://github.com/phac-nml/staramrnf/releases/tag/0.1.0
 [0.2.0]: https://github.com/phac-nml/staramrnf/releases/tag/0.2.0
 [0.3.0]: https://github.com/phac-nml/staramrnf/releases/tag/0.3.0
+[0.3.1]: https://github.com/phac-nml/staramrnf/releases/tag/0.3.1
