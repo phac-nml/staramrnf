@@ -51,7 +51,7 @@ include { CSVTK_CONCAT } from '../modules/local/csvtk/concat/main.nf'
 */
 
 workflow STARAMR {
-
+    ch_versions = Channel.empty()
     // Track processed IDs
     def processedIDs = [] as Set
 
@@ -83,7 +83,7 @@ workflow STARAMR {
     STARAMR_SEARCH (
         ch_input
     )
-
+    ch_versions = ch_versions.mix(STARAMR_SEARCH.out.versions)
     //
     // MODULE: CSVTK_CONCAT
     // Create a single file for all tsv files
@@ -146,6 +146,9 @@ workflow STARAMR {
         ch_tsvs_6,
         "tsv",
         "tsv"
+    )
+    CUSTOM_DUMPSOFTWAREVERSIONS (
+        ch_versions.unique().collectFile(name: 'collated_versions.yml')
     )
 
     }

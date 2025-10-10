@@ -14,6 +14,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Adding GitHub CI tests against Nextflow `24.10.3`. [PR #33](https://github.com/phac-nml/staramrnf/pull/33)
 
+### `Added`
+
+- `software_version.yml` file in `pipeline_info` results. [PR #36](https://github.com/phac-nml/staramrnf/pull/36)
+
 ## [0.3.0] - 2025-03-20
 
 ### `Update`
