@@ -1,4 +1,4 @@
 Isolate ID	Gene	Predicted Phenotype	CGE Predicted Phenotype	Type	Position	Mutation	%Identity	%Overlap	HSP Length/Total Length	Contig	Start	End	Pointfinder Position	CGE Notes	CGE Required Mutation	CGE Mechanism	CGE PMID
-A_1_	gyrA (D87N)	ciprofloxacin I/R, nalidixic acid	Nalidixic acid,Ciprofloxacin	codon	87	GAC -> AAC (D -> N)	98.75	100.00	2637/2637	gb|AE017220.1|	2390630	2387994	D87N			Target modification	10471553,11283069,7492118,15056435
-A_1_	gyrA (S83F)	ciprofloxacin I/R, nalidixic acid	Nalidixic acid,Ciprofloxacin	codon	83	TCC -> TTC (S -> F)	98.75	100.00	2637/2637	gb|AE017220.1|	2390630	2387994	S83F			Target modification	7492118,10471553
-B2	gyrA (S83A)	ciprofloxacin I/R, nalidixic acid	Nalidixic acid,Ciprofloxacin	codon	83	TCG -> GCG (S -> A)	99.28	100.00	2628/2628	gb|JRKE01000028.1|	10028	12655	S83A			Target modification	8891148,2168148,12654733,12654733
+A_1_	gyrA (D87N)	ciprofloxacin I/R, nalidixic acid	Nalidixic acid,Ciprofloxacin	codon	87	GAC -> AAC (D -> N)	98.75	100.00	2637/2637	AE017220.1	2390630	2387994	D87N			Target modification	10471553,11283069,7492118,15056435
+A_1_	gyrA (S83F)	ciprofloxacin I/R, nalidixic acid	Nalidixic acid,Ciprofloxacin	codon	83	TCC -> TTC (S -> F)	98.75	100.00	2637/2637	AE017220.1	2390630	2387994	S83F			Target modification	7492118,10471553
+B2	gyrA (S83A)	ciprofloxacin I/R, nalidixic acid	Nalidixic acid,Ciprofloxacin	codon	83	TCG -> GCG (S -> A)	99.28	100.00	2628/2628	JRKE01000028.1	10028	12655	S83A			Target modification	8891148,2168148,12654733,12654733
