@@ -1,0 +1,94 @@
+{
+    "-profile test": {
+        "content": [
+            {
+                "CUSTOM_DUMPSOFTWAREVERSIONS": {
+                    "python": "3.11.0",
+                    "yaml": "6.0"
+                },
+                "STARAMR_SEARCH": {
+                    "staramr": "0.12.1"
+                },
+                "Workflow": {
+                    "phac-nml/staramrnf": "0.3.1"
+                }
+            },
+            [
+                "csvtk",
+                "csvtk/merged_detailed_summary.staramr.tsv",
+                "csvtk/merged_mlst.staramr.tsv",
+                "csvtk/merged_plasmidfinder.staramr.tsv",
+                "csvtk/merged_pointfinder.staramr.tsv",
+                "csvtk/merged_resfinder.staramr.tsv",
+                "csvtk/merged_summary.staramr.tsv",
+                "iridanext.output.json",
+                "pipeline_info",
+                "pipeline_info/software_versions.yml",
+                "staramr",
+                "staramr/A_1__results",
+                "staramr/A_1__results/A_1__detailed_summary.staramr.tsv",
+                "staramr/A_1__results/A_1__mlst.staramr.tsv",
+                "staramr/A_1__results/A_1__plasmidfinder.staramr.tsv",
+                "staramr/A_1__results/A_1__pointfinder.staramr.tsv",
+                "staramr/A_1__results/A_1__resfinder.staramr.tsv",
+                "staramr/A_1__results/A_1__results.staramr.xlsx",
+                "staramr/A_1__results/A_1__settings.staramr.txt",
+                "staramr/A_1__results/A_1__summary.staramr.tsv",
+                "staramr/B2_GCF_000196035_results",
+                "staramr/B2_GCF_000196035_results/B2_GCF_000196035_detailed_summary.staramr.tsv",
+                "staramr/B2_GCF_000196035_results/B2_GCF_000196035_mlst.staramr.tsv",
+                "staramr/B2_GCF_000196035_results/B2_GCF_000196035_plasmidfinder.staramr.tsv",
+                "staramr/B2_GCF_000196035_results/B2_GCF_000196035_resfinder.staramr.tsv",
+                "staramr/B2_GCF_000196035_results/B2_GCF_000196035_results.staramr.xlsx",
+                "staramr/B2_GCF_000196035_results/B2_GCF_000196035_settings.staramr.txt",
+                "staramr/B2_GCF_000196035_results/B2_GCF_000196035_summary.staramr.tsv",
+                "staramr/B2_results",
+                "staramr/B2_results/B2_detailed_summary.staramr.tsv",
+                "staramr/B2_results/B2_mlst.staramr.tsv",
+                "staramr/B2_results/B2_plasmidfinder.staramr.tsv",
+                "staramr/B2_results/B2_pointfinder.staramr.tsv",
+                "staramr/B2_results/B2_resfinder.staramr.tsv",
+                "staramr/B2_results/B2_results.staramr.xlsx",
+                "staramr/B2_results/B2_settings.staramr.txt",
+                "staramr/B2_results/B2_summary.staramr.tsv",
+                "staramr/GCF_000196035_B_results",
+                "staramr/GCF_000196035_B_results/GCF_000196035_B_detailed_summary.staramr.tsv",
+                "staramr/GCF_000196035_B_results/GCF_000196035_B_mlst.staramr.tsv",
+                "staramr/GCF_000196035_B_results/GCF_000196035_B_plasmidfinder.staramr.tsv",
+                "staramr/GCF_000196035_B_results/GCF_000196035_B_resfinder.staramr.tsv",
+                "staramr/GCF_000196035_B_results/GCF_000196035_B_results.staramr.xlsx",
+                "staramr/GCF_000196035_B_results/GCF_000196035_B_settings.staramr.txt",
+                "staramr/GCF_000196035_B_results/GCF_000196035_B_summary.staramr.tsv"
+            ],
+            [
+                "A_1__detailed_summary.staramr.tsv:md5,baa57e24f7fa461be86b3a9c25e94f44",
+                "A_1__mlst.staramr.tsv:md5,175670a7c8fc2fd953a81ac99b1a6e6b",
+                "A_1__plasmidfinder.staramr.tsv:md5,d2d72406cca5e1f166dcb24d2507537d",
+                "A_1__pointfinder.staramr.tsv:md5,5f3bbf121a668a170357af254c117e15",
+                "A_1__resfinder.staramr.tsv:md5,77de8d59a2e283a30da61eca274e8e09",
+                "A_1__summary.staramr.tsv:md5,959571505b0ae540b4179f204d1e6dd6",
+                "B2_GCF_000196035_detailed_summary.staramr.tsv:md5,ae803c270d4fb799903c417aadd1f992",
+                "B2_GCF_000196035_mlst.staramr.tsv:md5,cc77e22bfc4b91aad5c1a82e79b30986",
+                "B2_GCF_000196035_plasmidfinder.staramr.tsv:md5,06f38f23d6be0fb32bf66d31a517d78c",
+                "B2_GCF_000196035_resfinder.staramr.tsv:md5,eddb40d436128595e7ac5c91fcb2bda0",
+                "B2_GCF_000196035_summary.staramr.tsv:md5,b818d2eead6dfd127aa5644bc1ac64bc",
+                "B2_detailed_summary.staramr.tsv:md5,43e7bb9feef07b007628702c6f126a8d",
+                "B2_mlst.staramr.tsv:md5,bbe1213eb4f9d2b044ee26ea17df8826",
+                "B2_plasmidfinder.staramr.tsv:md5,02503f0dca5bf6f33215215173d0c910",
+                "B2_pointfinder.staramr.tsv:md5,9baf996c113fcc9bbf007ef4085d5228",
+                "B2_resfinder.staramr.tsv:md5,dc5c476083c04ea581bad0d149168964",
+                "B2_summary.staramr.tsv:md5,f5e5840fe7630bd2409a3506a8d2e064",
+                "GCF_000196035_B_detailed_summary.staramr.tsv:md5,329cdaa668b7d7c68edfa9a54515762f",
+                "GCF_000196035_B_mlst.staramr.tsv:md5,ee29f2af41c7a78dad1549b6707b15d1",
+                "GCF_000196035_B_plasmidfinder.staramr.tsv:md5,06f38f23d6be0fb32bf66d31a517d78c",
+                "GCF_000196035_B_resfinder.staramr.tsv:md5,34c9513efc4c7db35b43d435b9d28f28",
+                "GCF_000196035_B_summary.staramr.tsv:md5,423bdf19847b4874de63b68f3ac7e61e"
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2026-03-12T10:28:37.174787983"
+    }
+}

@@ -3,6 +3,13 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.2] - 2026-03-13
+
+- Updated staramr to the [patch release](https://github.com/phac-nml/staramr) `0.12.1` which includes updates of CGE databases and gene-drug mapping key for Pointfinder/Resfinder.[PR #37](https://github.com/phac-nml/staramrnf/pull/37)
+- Updated version of `nf-core` used for linting pipeline code. [PR #37](https://github.com/phac-nml/staramrnf/pull/37)
+- Updated GitHub Actions and nf-test configuration to latest versions provided by `nf-core` pipelines template. [PR #37](https://github.com/phac-nml/staramrnf/pull/37)
+- Updated minimum Nextflow version for pipeline to be `24.10.3`. [PR #37](https://github.com/phac-nml/staramrnf/pull/37)
+
 ## [0.3.1] - 2025-10-10
 
 ### `Update`
@@ -50,3 +57,4 @@ staramrnf follows the `nf-core` pipeline file structure and used the nf-core [te
 [0.2.0]: https://github.com/phac-nml/staramrnf/releases/tag/0.2.0
 [0.3.0]: https://github.com/phac-nml/staramrnf/releases/tag/0.3.0
 [0.3.1]: https://github.com/phac-nml/staramrnf/releases/tag/0.3.1
+[0.3.2]: https://github.com/phac-nml/staramrnf/releases/tag/0.3.2

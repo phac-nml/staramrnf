@@ -1,0 +1,6 @@
+.DS_Store
+pipeline_info/*.{html,json,txt,yml}
+iridanext.output.json
+staramr/*/*settings.staramr.txt
+staramr/*/*results.staramr.xlsx
+csvtk/*.tsv
