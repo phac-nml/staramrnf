@@ -8,18 +8,18 @@ nextflow_pipeline {
         when {
             params {
                 input = "$baseDir/tests/assets/test_samplesheet.csv"
-                outdir = "$baseDir/tests/results"
+                outdir = "results"
                 max_memory = "4.GB"
             }
         }
 
         then {
             assert workflow.success
-            assert path("$baseDir/tests/results").exists()
+            assert path("$launchDir/results").exists()
 
             // compare IRIDA Next JSON output
-            assert path("$baseDir/tests/results/iridanext.output.json").exists()
-            def iridanext_json = path("$baseDir/tests/results/iridanext.output.json").json
+            assert path("$launchDir/results/iridanext.output.json").exists()
+            def iridanext_json = path("$launchDir/results/iridanext.output.json").json
             def iridanext_global = iridanext_json.files.global
             def iridanext_samples = iridanext_json.files.samples
             def iridanext_metadata = iridanext_json.metadata.samples
@@ -27,11 +27,11 @@ nextflow_pipeline {
             // Salmonella tests
             def salmonella_metadata = iridanext_metadata.GCA_000008105
             assert salmonella_metadata."StarAMR Quality Module" == "Passed"
-            assert salmonella_metadata."StarAMR Predicted Phenotype" == "streptomycin, kanamycin, ampicillin, amoxicillin/clavulanic acid, cefoxitin, ceftriaxone, chloramphenicol, trimethoprim, ciprofloxacin I/R, nalidixic acid, sulfisoxazole, tetracycline"
+            assert salmonella_metadata."StarAMR Predicted Phenotype" == "streptomycin, kanamycin, ampicillin, amoxicillin/clavulanic acid, cefoxitin, ceftriaxone, unknown[CmlA7_1_JQ639792], trimethoprim, ciprofloxacin I/R, nalidixic acid, sulfisoxazole, tetracycline"
             assert salmonella_metadata."StarAMR CGE Predicted Phenotype" == "Spectinomycin, Streptomycin, Neomycin, Kanamycin, Lividomycin, Paromomycin, Ribostamycin, Amoxicillin, Amoxicillin+Clavulanic acid, Ampicillin, Ampicillin+Clavulanic acid, Cefotaxime, Cefoxitin, Ceftazidime, Piperacillin, Piperacillin+Tazobactam, Ticarcillin, Ticarcillin+Clavulanic acid, Cephalothin, Chloramphenicol, Trimethoprim, Nalidixic acid, Ciprofloxacin, Sulfamethoxazole, Doxycycline, Tetracycline"
-            assert salmonella_metadata."StarAMR Genotype" == "aadA1, aadA2, aadA2, aph(3'')-Ib, aph(3')-Ia, blaCMY-2, blaTEM-1B, cmlA1, dfrA12, gyrA (D87N), gyrA (S83F), sul1, sul3, tet(A)"
+            assert salmonella_metadata."StarAMR Genotype" == "aadA1, aadA2, aadA2, aph(3'')-Ib, aph(3')-Ia, blaCMY-2, blaTEM-1B, CmlA7, dfrA12, gyrA (D87N), gyrA (S83F), sul1, sul3, tet(A)"
             assert salmonella_metadata."StarAMR Plasmid" == "IncFIB(K), IncFIB(S), IncFII(S)"
-            assert salmonella_metadata."StarAMR Scheme" == "senterica_achtman_2"
+            assert salmonella_metadata."StarAMR Scheme" == "salmonella"
             assert salmonella_metadata."StarAMR Sequence Type" == "66"
             assert salmonella_metadata."StarAMR N50 value": "4755700"
             assert salmonella_metadata."StarAMR Genome Length": "4944000"
@@ -62,58 +62,58 @@ nextflow_pipeline {
 
             // Check the commandline parameters
             // Salmonella
-            assert path("$baseDir/tests/results/staramr/A_1__results/A_1__settings.staramr.txt").exists()
-            def salmonella_settings = new File("$baseDir/tests/results/staramr/A_1__results/A_1__settings.staramr.txt")
+            assert path("$launchDir/results/staramr/A_1__results/A_1__settings.staramr.txt").exists()
+            def salmonella_settings = new File("$launchDir/results/staramr/A_1__results/A_1__settings.staramr.txt")
             def salmonella_cmd = salmonella_settings.readLines().get(0)
             assert salmonella_cmd == "command_line                  = /usr/local/bin/staramr search --pointfinder-organism salmonella --minimum-contig-length 300 --genome-size-lower-bound 4000000 --genome-size-upper-bound 6000000 --minimum-N50-value 10000 --minimum-contig-length 300 --unacceptable-number-contigs 1000 --pid-threshold 98 --percent-length-overlap-plasmidfinder 60 --percent-length-overlap-resfinder 60 --percent-length-overlap-pointfinder 95 --nprocs 1 -o A_1__results A_1_.fasta"
 
             // Ecoli
-            assert path("$baseDir/tests/results/staramr/B2_results/B2_settings.staramr.txt").exists()
-            def ecoli_settings = new File("$baseDir/tests/results/staramr/B2_results/B2_settings.staramr.txt")
+            assert path("$launchDir/results/staramr/B2_results/B2_settings.staramr.txt").exists()
+            def ecoli_settings = new File("$launchDir/results/staramr/B2_results/B2_settings.staramr.txt")
             def ecoli_cmd = ecoli_settings.readLines().get(0)
             assert ecoli_cmd == "command_line                  = /usr/local/bin/staramr search --pointfinder-organism escherichia_coli --minimum-contig-length 300 --genome-size-lower-bound 4000000 --genome-size-upper-bound 6000000 --minimum-N50-value 10000 --minimum-contig-length 300 --unacceptable-number-contigs 1000 --pid-threshold 98 --percent-length-overlap-plasmidfinder 60 --percent-length-overlap-resfinder 60 --percent-length-overlap-pointfinder 95 --nprocs 1 -o B2_results B2.fasta"
 
             // Listeria
-            assert path("$baseDir/tests/results/staramr/B2_GCF_000196035_results/B2_GCF_000196035_settings.staramr.txt").exists()
-            def listeria_settings = new File("$baseDir/tests/results/staramr/B2_GCF_000196035_results/B2_GCF_000196035_settings.staramr.txt")
+            assert path("$launchDir/results/staramr/B2_GCF_000196035_results/B2_GCF_000196035_settings.staramr.txt").exists()
+            def listeria_settings = new File("$launchDir/results/staramr/B2_GCF_000196035_results/B2_GCF_000196035_settings.staramr.txt")
             def listeria_cmd = listeria_settings.readLines().get(0)
             assert listeria_cmd == "command_line                  = /usr/local/bin/staramr search --minimum-contig-length 300 --genome-size-lower-bound 4000000 --genome-size-upper-bound 6000000 --minimum-N50-value 10000 --minimum-contig-length 300 --unacceptable-number-contigs 1000 --pid-threshold 98 --percent-length-overlap-plasmidfinder 60 --percent-length-overlap-resfinder 60 --percent-length-overlap-pointfinder 95 --nprocs 1 -o B2_GCF_000196035_results B2_GCF_000196035.fasta"
 
             // Check CSVTK_concat output (merged_*) files
 
             // merged_detailed_summary.tsv
-            def actual_detailed_summary_tsv = path("$baseDir/tests/results/csvtk/merged_detailed_summary.staramr.tsv")
+            def actual_detailed_summary_tsv = path("$launchDir/results/csvtk/merged_detailed_summary.staramr.tsv")
             def expected_detailed_summary_tsv = path("$baseDir/tests/data/merged_detailed_summary.tsv")
             assert actual_detailed_summary_tsv.readLines().sort() == expected_detailed_summary_tsv.readLines().sort()
 
             // merged_mlst.tsv
-            def actual_mlst_tsv = path("$baseDir/tests/results/csvtk/merged_mlst.staramr.tsv")
+            def actual_mlst_tsv = path("$launchDir/results/csvtk/merged_mlst.staramr.tsv")
             def expected_mlst_tsv = path("$baseDir/tests/data/merged_mlst.tsv")
             assert actual_mlst_tsv.readLines().sort() == expected_mlst_tsv.readLines().sort()
 
             // merged_plasmidfinder.tsv
-            def actual_plasmidfinder_tsv = path("$baseDir/tests/results/csvtk/merged_plasmidfinder.staramr.tsv")
+            def actual_plasmidfinder_tsv = path("$launchDir/results/csvtk/merged_plasmidfinder.staramr.tsv")
             def expected_plasmidfinder_tsv = path("$baseDir/tests/data/merged_plasmidfinder.tsv")
             assert actual_plasmidfinder_tsv.readLines().sort() == expected_plasmidfinder_tsv.readLines().sort()
 
             // merged_pointfinder.tsv
-            def actual_pointfinder_tsv = path("$baseDir/tests/results/csvtk/merged_pointfinder.staramr.tsv")
+            def actual_pointfinder_tsv = path("$launchDir/results/csvtk/merged_pointfinder.staramr.tsv")
             def expected_pointfinder_tsv = path("$baseDir/tests/data/merged_pointfinder.tsv")
             assert actual_pointfinder_tsv.readLines().sort() == expected_pointfinder_tsv.readLines().sort()
 
             // merged_resfinder.tsv
-            def actual_resfinder_tsv = path("$baseDir/tests/results/csvtk/merged_resfinder.staramr.tsv")
+            def actual_resfinder_tsv = path("$launchDir/results/csvtk/merged_resfinder.staramr.tsv")
             def expected_resfinder_tsv = path("$baseDir/tests/data/merged_resfinder.tsv")
             assert actual_resfinder_tsv.readLines().sort() == expected_resfinder_tsv.readLines().sort()
 
             // merged_summary.tsv
-            def actual_summary_tsv = path("$baseDir/tests/results/csvtk/merged_summary.staramr.tsv")
+            def actual_summary_tsv = path("$launchDir/results/csvtk/merged_summary.staramr.tsv")
             def expected_summary_tsv = path("$baseDir/tests/data/merged_summary.tsv")
             assert actual_summary_tsv.readLines().sort() == expected_summary_tsv.readLines().sort()
 
             // Check that Listeria, without a value in the sample_name column, runs by using the sample as the sample_name
-            assert path("$baseDir/tests/results/staramr/GCF_000196035_B_results/GCF_000196035_B_settings.staramr.txt").exists()
-            def sample_name_test = new File("$baseDir/tests/results/staramr/GCF_000196035_B_results/GCF_000196035_B_settings.staramr.txt")
+            assert path("$launchDir/results/staramr/GCF_000196035_B_results/GCF_000196035_B_settings.staramr.txt").exists()
+            def sample_name_test = new File("$launchDir/results/staramr/GCF_000196035_B_results/GCF_000196035_B_settings.staramr.txt")
             def sample_name_test_cmd = sample_name_test.readLines().get(0)
             assert sample_name_test_cmd == "command_line                  = /usr/local/bin/staramr search --minimum-contig-length 300 --genome-size-lower-bound 4000000 --genome-size-upper-bound 6000000 --minimum-N50-value 10000 --minimum-contig-length 300 --unacceptable-number-contigs 1000 --pid-threshold 98 --percent-length-overlap-plasmidfinder 60 --percent-length-overlap-resfinder 60 --percent-length-overlap-pointfinder 95 --nprocs 1 -o GCF_000196035_B_results GCF_000196035_B.fasta"
 
