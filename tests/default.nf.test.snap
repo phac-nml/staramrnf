@@ -10,7 +10,7 @@
                     "staramr": "0.12.1"
                 },
                 "Workflow": {
-                    "phac-nml/staramrnf": "0.3.1"
+                    "phac-nml/staramrnf": "0.3.2"
                 }
             },
             [
@@ -86,9 +86,9 @@
             ]
         ],
         "meta": {
-            "nf-test": "0.9.3",
-            "nextflow": "25.10.0"
+            "nf-test": "0.9.2",
+            "nextflow": "24.10.6"
         },
-        "timestamp": "2026-03-12T10:28:37.174787983"
+        "timestamp": "2026-03-12T20:11:46.12416686"
     }
 }
