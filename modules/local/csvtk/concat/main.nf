@@ -1,6 +1,7 @@
 process CSVTK_CONCAT {
     tag "$meta.id"
     label 'process_low'
+    fair true
 
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
