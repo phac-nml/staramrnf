@@ -2,10 +2,10 @@ process STARAMR_SEARCH {
     tag "$meta.id"
     label 'process_single'
 
-    conda "bioconda::staramr=0.11.1"
+    conda "bioconda::staramr=0.12.1"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/staramr:0.11.1--pyhdfd78af_0':
-        'biocontainers/staramr:0.11.1--pyhdfd78af_0' }"
+        'https://depot.galaxyproject.org/singularity/staramr:0.12.1--pyhdfd78af_1':
+        'biocontainers/staramr:0.12.1--pyhdfd78af_1' }"
 
     input:
     tuple val(meta), path(contigs)

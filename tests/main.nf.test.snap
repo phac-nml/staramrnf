@@ -1,0 +1,23 @@
+{
+    "Should run without failures": {
+        "content": [
+            {
+                "CUSTOM_DUMPSOFTWAREVERSIONS": {
+                    "python": "3.11.0",
+                    "yaml": "6.0"
+                },
+                "STARAMR_SEARCH": {
+                    "staramr": "0.12.1"
+                },
+                "Workflow": {
+                    "phac-nml/staramrnf": "0.3.2"
+                }
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.2",
+            "nextflow": "24.10.6"
+        },
+        "timestamp": "2026-03-12T20:12:21.154731704"
+    }
+}
