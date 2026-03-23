@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+
+### `Updated`
+
+- Set nextflow version 25.10.4 to replace 'latest-everything' to confirm compatibility with next IRIDA-Next nextflow version in `.github/workflows` for nf-test. [PR #39](https://github.com/phac-nml/staramrnf/pull/39)
+
 ## [0.3.2] - 2026-03-13
 
 - Updated staramr to the [patch release](https://github.com/phac-nml/staramr) `0.12.1` which includes updates of CGE databases and gene-drug mapping key for Pointfinder/Resfinder.[PR #37](https://github.com/phac-nml/staramrnf/pull/37)
