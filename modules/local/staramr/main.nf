@@ -4,8 +4,8 @@ process STARAMR_SEARCH {
 
     conda "bioconda::staramr=0.12.1"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/staramr:0.12.1--pyhdfd78af_1':
-        'biocontainers/staramr:0.12.1--pyhdfd78af_1' }"
+        'https://depot.galaxyproject.org/singularity/staramr:0.12.2--pyhdfd78af_0':
+        'biocontainers/staramr:0.12.2--pyhdfd78af_0' }"
 
     input:
     tuple val(meta), path(contigs)
