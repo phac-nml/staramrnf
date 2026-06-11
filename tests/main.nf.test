@@ -68,19 +68,20 @@ nextflow_pipeline {
             assert path("$outputDir/staramr/A_1__results/A_1__settings.staramr.txt").exists()
             def salmonella_settings = new File("$outputDir/staramr/A_1__results/A_1__settings.staramr.txt")
             def salmonella_cmd = salmonella_settings.readLines().get(0)
-            assert salmonella_cmd == "command_line                  = /usr/local/bin/staramr search --pointfinder-organism salmonella --minimum-contig-length 300 --genome-size-lower-bound 4000000 --genome-size-upper-bound 6000000 --minimum-N50-value 10000 --minimum-contig-length 300 --unacceptable-number-contigs 1000 --pid-threshold 98 --percent-length-overlap-plasmidfinder 60 --percent-length-overlap-resfinder 60 --percent-length-overlap-pointfinder 95 --nprocs 1 -o A_1__results A_1_.fasta"
+            assert salmonella_cmd == "command_line                  = /usr/local/bin/staramr search --pointfinder-organism salmonella --minimum-contig-length 300 --minimum-N50-value 10000 --minimum-contig-length 300 --unacceptable-number-contigs 1000 --pid-threshold 98 --percent-length-overlap-plasmidfinder 60 --genome-size-lower-bound 4000000 --genome-size-upper-bound 6700000 --percent-length-overlap-resfinder 52 --percent-length-overlap-pointfinder 95 --nprocs 1 -o A_1__results A_1_.fasta"
 
-            // Ecoli
+
+            // Ecoli with wrong species in samplesheet
             assert path("$outputDir/staramr/B2_results/B2_settings.staramr.txt").exists()
             def ecoli_settings = new File("$outputDir/staramr/B2_results/B2_settings.staramr.txt")
             def ecoli_cmd = ecoli_settings.readLines().get(0)
-            assert ecoli_cmd == "command_line                  = /usr/local/bin/staramr search --pointfinder-organism escherichia_coli --minimum-contig-length 300 --genome-size-lower-bound 4000000 --genome-size-upper-bound 6000000 --minimum-N50-value 10000 --minimum-contig-length 300 --unacceptable-number-contigs 1000 --pid-threshold 98 --percent-length-overlap-plasmidfinder 60 --percent-length-overlap-resfinder 60 --percent-length-overlap-pointfinder 95 --nprocs 1 -o B2_results B2.fasta"
+            assert ecoli_cmd == "command_line                  = /usr/local/bin/staramr search --pointfinder-organism escherichia_coli --minimum-contig-length 300 --minimum-N50-value 10000 --minimum-contig-length 300 --unacceptable-number-contigs 1000 --pid-threshold 98 --percent-length-overlap-plasmidfinder 60 --genome-size-lower-bound 4000000 --genome-size-upper-bound 6700000 --percent-length-overlap-resfinder 52 --percent-length-overlap-pointfinder 95 --nprocs 1 -o B2_results B2.fasta"
 
             // Listeria
             assert path("$outputDir/staramr/B2_GCF_000196035_results/B2_GCF_000196035_settings.staramr.txt").exists()
             def listeria_settings = new File("$outputDir/staramr/B2_GCF_000196035_results/B2_GCF_000196035_settings.staramr.txt")
             def listeria_cmd = listeria_settings.readLines().get(0)
-            assert listeria_cmd == "command_line                  = /usr/local/bin/staramr search --minimum-contig-length 300 --genome-size-lower-bound 4000000 --genome-size-upper-bound 6000000 --minimum-N50-value 10000 --minimum-contig-length 300 --unacceptable-number-contigs 1000 --pid-threshold 98 --percent-length-overlap-plasmidfinder 60 --percent-length-overlap-resfinder 60 --percent-length-overlap-pointfinder 95 --nprocs 1 -o B2_GCF_000196035_results B2_GCF_000196035.fasta"
+            assert listeria_cmd == "command_line                  = /usr/local/bin/staramr search --minimum-contig-length 300 --minimum-N50-value 10000 --minimum-contig-length 300 --unacceptable-number-contigs 1000 --pid-threshold 98 --percent-length-overlap-plasmidfinder 60 --genome-size-lower-bound 4000000 --genome-size-upper-bound 6000000 --percent-length-overlap-resfinder 60 --percent-length-overlap-pointfinder 95 --nprocs 1 -o B2_GCF_000196035_results B2_GCF_000196035.fasta"
 
             // Check CSVTK_concat output (merged_*) files
 
@@ -118,7 +119,7 @@ nextflow_pipeline {
             assert path("$outputDir/staramr/GCF_000196035_B_results/GCF_000196035_B_settings.staramr.txt").exists()
             def sample_name_test = new File("$outputDir/staramr/GCF_000196035_B_results/GCF_000196035_B_settings.staramr.txt")
             def sample_name_test_cmd = sample_name_test.readLines().get(0)
-            assert sample_name_test_cmd == "command_line                  = /usr/local/bin/staramr search --minimum-contig-length 300 --genome-size-lower-bound 4000000 --genome-size-upper-bound 6000000 --minimum-N50-value 10000 --minimum-contig-length 300 --unacceptable-number-contigs 1000 --pid-threshold 98 --percent-length-overlap-plasmidfinder 60 --percent-length-overlap-resfinder 60 --percent-length-overlap-pointfinder 95 --nprocs 1 -o GCF_000196035_B_results GCF_000196035_B.fasta"
+            assert sample_name_test_cmd == "command_line                  = /usr/local/bin/staramr search --minimum-contig-length 300 --minimum-N50-value 10000 --minimum-contig-length 300 --unacceptable-number-contigs 1000 --pid-threshold 98 --percent-length-overlap-plasmidfinder 60 --genome-size-lower-bound 4000000 --genome-size-upper-bound 6000000 --percent-length-overlap-resfinder 60 --percent-length-overlap-pointfinder 95 --nprocs 1 -o GCF_000196035_B_results GCF_000196035_B.fasta"
 
         }
 
