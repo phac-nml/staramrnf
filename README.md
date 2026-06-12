@@ -174,24 +174,25 @@ nextflow run main.nf --outdir ./results --input samplesheet.csv --pid_threshold 
 
 ### Genus specific settings
 
-They are used when the `species` column has any of the following genus selected:
+### Genus-specific settings
+
+Genus-specific settings are used when the `species` column of the sample sheet contains any of the following genera:
+
 ```
 genus_list = ['salmonella', 'campylobacter', 'escherichia', 'shigella']
 ```
 
 #### Salmonella, Shigella, or Escherchia
 - Lower bound for our genome size for quality metrics = 4,000,000
-- Upper bound for our genome size for quality metrics= 6,700,000 
+- Upper bound for our genome size for quality metrics = 6,700,000 
 - Percent length overlap of BLAST hit for ResFinder Database = 52
 - PointFinder Database = Salmonella or PointFinder Database = E.coli
 #### Campylobacter
-- Lower bound for our genome size for quality metrics= 1,250,000
-- Upper bound for our genome size for quality metrics= 2,500,000
+- Lower bound for our genome size for quality metrics = 1,250,000
+- Upper bound for our genome size for quality metric s= 2,500,000
 - Percent length overlap of BLAST hit for ResFinder Database = 52 
-- Percent length overlap ofBLAST hit for PointFinder Database = 58
-- Point Finder Database = Campylobacter
-
-
+- Percent length overlap of BLAST hit for PointFinder Database = 58
+- PointFinder Database = Campylobacter
 
 ### Nextflow
 
