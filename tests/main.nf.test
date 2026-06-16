@@ -27,7 +27,7 @@ nextflow_pipeline {
             // Salmonella tests
             def salmonella_metadata = iridanext_metadata.GCA_000008105
             assert salmonella_metadata."StarAMR Quality Module" == "Passed"
-            assert salmonella_metadata."StarAMR Predicted Phenotype" == "streptomycin, kanamycin, ampicillin, amoxicillin/clavulanic acid, cefoxitin, ceftriaxone, unknown[CmlA7_1_JQ639792], trimethoprim, ciprofloxacin I/R, nalidixic acid, sulfisoxazole, tetracycline"
+            assert salmonella_metadata."StarAMR Predicted Phenotype" == "streptomycin, kanamycin, ampicillin, amoxicillin/clavulanic acid, cefoxitin, ceftriaxone, chloramphenicol, trimethoprim, ciprofloxacin I/R, nalidixic acid, sulfisoxazole, tetracycline"
             assert salmonella_metadata."StarAMR CGE Predicted Phenotype" == "Spectinomycin, Streptomycin, Neomycin, Kanamycin, Lividomycin, Paromomycin, Ribostamycin, Amoxicillin, Amoxicillin+Clavulanic acid, Ampicillin, Ampicillin+Clavulanic acid, Cefotaxime, Cefoxitin, Ceftazidime, Piperacillin, Piperacillin+Tazobactam, Ticarcillin, Ticarcillin+Clavulanic acid, Cephalothin, Chloramphenicol, Trimethoprim, Nalidixic acid, Ciprofloxacin, Sulfamethoxazole, Doxycycline, Tetracycline"
             assert salmonella_metadata."StarAMR Genotype" == "aadA1, aadA2, aadA2, aph(3'')-Ib, aph(3')-Ia, blaCMY-2, blaTEM-1B, CmlA7, dfrA12, gyrA (D87N), gyrA (S83F), sul1, sul3, tet(A)"
             assert salmonella_metadata."StarAMR Plasmid" == "IncFIB(K), IncFIB(S), IncFII(S)"
@@ -149,7 +149,7 @@ nextflow_pipeline {
             // Salmonella tests
             def salmonella_metadata = iridanext_metadata.Salmonella
             assert salmonella_metadata."StarAMR Quality Module" == "Passed"
-            assert salmonella_metadata."StarAMR Predicted Phenotype" == "streptomycin, kanamycin, ampicillin, amoxicillin/clavulanic acid, cefoxitin, ceftriaxone, unknown[CmlA7_1_JQ639792], trimethoprim, ciprofloxacin I/R, nalidixic acid, sulfisoxazole, tetracycline"
+            assert salmonella_metadata."StarAMR Predicted Phenotype" == "streptomycin, kanamycin, ampicillin, amoxicillin/clavulanic acid, cefoxitin, ceftriaxone, chloramphenicol, trimethoprim, ciprofloxacin I/R, nalidixic acid, sulfisoxazole, tetracycline"
             assert salmonella_metadata."StarAMR CGE Predicted Phenotype" == "Spectinomycin, Streptomycin, Neomycin, Kanamycin, Lividomycin, Paromomycin, Ribostamycin, Amoxicillin, Amoxicillin+Clavulanic acid, Ampicillin, Ampicillin+Clavulanic acid, Cefotaxime, Cefoxitin, Ceftazidime, Piperacillin, Piperacillin+Tazobactam, Ticarcillin, Ticarcillin+Clavulanic acid, Cephalothin, Chloramphenicol, Trimethoprim, Nalidixic acid, Ciprofloxacin, Sulfamethoxazole, Doxycycline, Tetracycline"
             assert salmonella_metadata."StarAMR Genotype" == "aadA1, aadA2, aadA2, aph(3'')-Ib, aph(3')-Ia, blaCMY-2, blaTEM-1B, CmlA7, dfrA12, gyrA (D87N), gyrA (S83F), sul1, sul3, tet(A)"
             assert salmonella_metadata."StarAMR Plasmid" == "IncFIB(K), IncFIB(S), IncFII(S)"
@@ -160,7 +160,7 @@ nextflow_pipeline {
 
             def salmonella_metadata_default = iridanext_metadata.Salmonella_default
             assert salmonella_metadata_default."StarAMR Quality Module" == "Passed"
-            assert salmonella_metadata_default."StarAMR Predicted Phenotype" == "streptomycin, kanamycin, ampicillin, amoxicillin/clavulanic acid, cefoxitin, ceftriaxone, unknown[CmlA7_1_JQ639792], trimethoprim, sulfisoxazole, tetracycline"
+            assert salmonella_metadata_default."StarAMR Predicted Phenotype" == "streptomycin, kanamycin, ampicillin, amoxicillin/clavulanic acid, cefoxitin, ceftriaxone, chloramphenicol, trimethoprim, sulfisoxazole, tetracycline"
             assert salmonella_metadata_default."StarAMR CGE Predicted Phenotype" == "Spectinomycin, Streptomycin, Neomycin, Kanamycin, Lividomycin, Paromomycin, Ribostamycin, Amoxicillin, Amoxicillin+Clavulanic acid, Ampicillin, Ampicillin+Clavulanic acid, Cefotaxime, Cefoxitin, Ceftazidime, Piperacillin, Piperacillin+Tazobactam, Ticarcillin, Ticarcillin+Clavulanic acid, Cephalothin, Chloramphenicol, Trimethoprim, Sulfamethoxazole, Doxycycline, Tetracycline"
             assert salmonella_metadata_default."StarAMR Genotype" == "aadA1, aadA2, aadA2, aph(3\'\')-Ib, aph(3\')-Ia, blaCMY-2, blaTEM-1B, CmlA7, dfrA12, sul1, sul3, tet(A)"
             assert salmonella_metadata_default."StarAMR Plasmid" == "IncFIB(K), IncFIB(S), IncFII(S)"
