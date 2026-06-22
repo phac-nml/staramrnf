@@ -171,12 +171,11 @@ nextflow run main.nf --outdir ./results --input samplesheet.csv --pid_threshold 
 | `no_exclude_genes`                     | Disable the default exclusion of some genes from ResFinder/PointFinder/PlasmidFinder **Default:** False                                                                                                                                              |
 | `exclude_negatives`                    | Exclude negative results (those susceptible to antimicrobials) **Default:** False                                                                                                                                                                    |
 | `exclude_resistance_phenotypes`        | Exclude predicted antimicrobial resistances **Default:** False                                                                                                                                                                                       |
+| `species_override_parameter`           | Used to allow users to override genus specific parameter defaults. **Default:** True                                                                                                                                                                                        |
 
 ### Genus specific settings
 
-### Genus-specific settings
-
-Genus-specific settings are used when the `species` column of the sample sheet contains any of the following genera:
+If `species_override_parameter = true` then genus-specific settings are used when the `species` column of the sample sheet contains any of the following genera:
 
 ```
 genus_list = ['salmonella', 'campylobacter', 'escherichia', 'shigella']
