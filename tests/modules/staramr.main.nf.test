@@ -9,7 +9,7 @@ nextflow_process {
             process {
                 """
                 input[0] = Channel.of(
-                    [[irida_id:"irida_id", id:"test_id", species:"Salmonella"], "$baseDir/tests/genomes/misc/long-header.fasta"])
+                    [[irida_id:"irida_id", id:"test_id", species:"Salmonella"], "$baseDir/tests/data/genomes/misc/long-header.fasta"])
                 """
             }
 

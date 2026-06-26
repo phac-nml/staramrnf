@@ -7,7 +7,7 @@ nextflow_pipeline {
         tag "full_pipeline"
         when {
             params {
-                input = "$baseDir/tests/assets/test_samplesheet.csv"
+                input = "$baseDir/tests/data/samplesheets/test_samplesheet.csv"
                 outdir = "$outputDir"
                 max_memory = "4.GB"
             }
@@ -126,7 +126,7 @@ nextflow_pipeline {
         tag "genus_parameters_test"
         when {
             params {
-                input = "$baseDir/tests/assets/test_genus_param_samplesheet.csv"
+                input = "$baseDir/tests/data/samplesheets/test_genus_param_samplesheet.csv"
                 outdir = "$outputDir"
                 max_memory = "4.GB"
             }
