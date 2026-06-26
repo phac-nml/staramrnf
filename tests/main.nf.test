@@ -1,7 +1,90 @@
 nextflow_pipeline {
 
-    name "Test Workflow main.nf"
+    name "StarAMR Nextflow Workflow"
     script "main.nf"
+
+    test("Basic Workflow Test") {
+        // Sample Sheet:
+        // SAMPLE1: The Salmonella PointFinder mutation gyrA (A67P) is identified.
+        // SAMPLE2: The ResFinder mutation blaIMP-42 is identified.
+
+        tag "pipeline_basic"
+
+        when {
+            params {
+                input = "$baseDir/tests/data/samplesheets/basic.csv"
+                outdir = "$outputDir"
+            }
+        }
+
+        then {
+            assert workflow.success
+            assert path("$outputDir").exists()
+
+            // compare IRIDA Next JSON output
+            assert path("$outputDir/iridanext.output.json").exists()
+            def iridanext_json = path("$outputDir/iridanext.output.json").json
+            def iridanext_global = iridanext_json.files.global
+            def iridanext_samples = iridanext_json.files.samples
+            def iridanext_metadata = iridanext_json.metadata.samples
+
+            // SAMPLE1: Salmonella gyrA (A67P) Pointfinder
+            def sample1 = iridanext_metadata.SAMPLE1
+            assert sample1."StarAMR Genotype" == "gyrA (A67P)"
+            assert sample1."StarAMR Predicted Phenotype" == "ciprofloxacin I/R, nalidixic acid"
+            assert sample1."StarAMR CGE Predicted Phenotype" == "Nalidixic acid, Ciprofloxacin"
+            assert sample1."StarAMR Plasmid" == "None"
+            assert sample1."StarAMR Scheme" == "-"
+            assert sample1."StarAMR Sequence Type" == "-"
+            assert sample1."StarAMR Genome Length" == "2637"
+            assert sample1."StarAMR N50 value" == "2637"
+
+            // SAMPLE2: blaIMP-42 ResFinder
+            def sample2 = iridanext_metadata.SAMPLE2
+            assert sample2."StarAMR Genotype" == "blaIMP-42"
+            assert sample2."StarAMR Predicted Phenotype" == "ampicillin, amoxicillin/clavulanic acid, cefoxitin, ceftriaxone, meropenem"
+            assert sample2."StarAMR CGE Predicted Phenotype" == "Amoxicillin, Amoxicillin+Clavulanic acid, Ampicillin, Ampicillin+Clavulanic acid, Cefepime, Cefixime, Cefotaxime, Cefoxitin, Ceftazidime, Ertapenem, Imipenem, Meropenem, Piperacillin, Piperacillin+Tazobactam"
+            assert sample2."StarAMR Plasmid" == "None"
+            assert sample2."StarAMR Scheme" == "-"
+            assert sample2."StarAMR Sequence Type" == "-"
+            assert sample2."StarAMR Genome Length" == "741"
+            assert sample2."StarAMR N50 value" == "741"
+
+            // Check the final output (csvtk merged files)
+
+            // Merged Detailed Summary:
+            def merged_detailed_summary = path("$outputDir/csvtk/merged_detailed_summary.staramr.tsv")
+            assert merged_detailed_summary.text.contains("Isolate ID\tData\tData Type\tPredicted Phenotype\tCGE Predicted Phenotype\t%Identity\t%Overlap\tHSP Length/Total Length\tContig\tStart\tEnd\tAccession")
+            assert merged_detailed_summary.text.contains("SAMPLE_1\tgyrA (A67P)\tResistance\tciprofloxacin I/R, nalidixic acid\tNalidixic acid,Ciprofloxacin\t99.96\t100.0\t2637/2637\tgyrA\t1.0\t2637.0\t")
+            assert merged_detailed_summary.text.contains("SAMPLE_2\tblaIMP-42\tResistance\tampicillin, amoxicillin/clavulanic acid, cefoxitin, ceftriaxone, meropenem\tAmoxicillin, Amoxicillin+Clavulanic acid, Ampicillin, Ampicillin+Clavulanic acid, Cefepime, Cefixime, Cefotaxime, Cefoxitin, Ceftazidime, Ertapenem, Imipenem, Meropenem, Piperacillin, Piperacillin+Tazobactam\t99.73\t100.0\t741/741\tblaIMP-42_1_AB753456\t1\t741\tAB753456")
+
+            // Merged MLST
+            def merged_mlst = path("$outputDir/csvtk/merged_mlst.staramr.tsv")
+            assert merged_mlst.text.contains("Isolate ID\tScheme\tSequence Type\tStatus\tScore")
+            assert merged_mlst.text.contains("SAMPLE_2\t-\t-\tNONE\t0")
+            assert merged_mlst.text.contains("SAMPLE_1\t-\t-\tNONE\t0")
+
+            // Merged PlasmidFinder
+            def merged_plasmidfinder = path("$outputDir/csvtk/merged_plasmidfinder.staramr.tsv")
+            assert merged_plasmidfinder.text.contains("Isolate ID\tPlasmid\t%Identity\t%Overlap\tHSP Length/Total Length\tContig\tStart\tEnd\tAccession")
+
+            // Merged PointFinder
+            def merged_pointfinder = path("$outputDir/csvtk/merged_pointfinder.staramr.tsv")
+            assert merged_pointfinder.text.contains("Isolate ID\tGene\tPredicted Phenotype\tCGE Predicted Phenotype\tType\tPosition\tMutation\t%Identity\t%Overlap\tHSP Length/Total Length\tContig\tStart\tEnd\tPointfinder Position\tCGE Notes\tCGE Required Mutation\tCGE Mechanism\tCGE PMID")
+            assert merged_pointfinder.text.contains("SAMPLE_1\tgyrA (A67P)\tciprofloxacin I/R, nalidixic acid\tNalidixic acid,Ciprofloxacin\tcodon\t67\tGCC -> CCC (A -> P)\t99.96\t100.00\t2637/2637\tgyrA\t1\t2637\tA67P\t\tgyrA_G81C.S.H.D\tTarget modification\t7492118")
+
+            // Merged ResFinder
+            def merged_resfinder = path("$outputDir/csvtk/merged_resfinder.staramr.tsv")
+            assert merged_resfinder.text.contains("Isolate ID\tGene\tPredicted Phenotype\tCGE Predicted Phenotype\t%Identity\t%Overlap\tHSP Length/Total Length\tContig\tStart\tEnd\tAccession\tSequence\tCGE Notes")
+            assert merged_resfinder.text.contains("SAMPLE_2\tblaIMP-42\tampicillin, amoxicillin/clavulanic acid, cefoxitin, ceftriaxone, meropenem\tAmoxicillin, Amoxicillin+Clavulanic acid, Ampicillin, Ampicillin+Clavulanic acid, Cefepime, Cefixime, Cefotaxime, Cefoxitin, Ceftazidime, Ertapenem, Imipenem, Meropenem, Piperacillin, Piperacillin+Tazobactam\t99.73\t100.00\t741/741\tblaIMP-42_1_AB753456\t1\t741\tAB753456\tATGAGCAAGTTATCTGCATTCTTTATATTTTTGTTTTGCAGCATTGATACCGCAGCAGAGTCTTTGCCAGATTTAAAAATTGAAAAGCTTGATGAAGGCGTTTATGTTCATACTTCGTTTGAAGAAGTTAACAGGTGGGGCGTTGTTCCTAAACATGGTTTGGTGGTTCTTGTAAATGCTGAGGCTTACCTAATTGACACTCCATTTACGGCTAAAGATACTGAAAAGTTAGTCACTTGGTTTGTGGAGCGTGGCTATAAAATAAAAGGCAGCATTTCCTCTCATTTTCATAGCGACAGCACGGGCGGAATAGAGTGGCTTAATTCTCGATCTATCCCCACGTATGCATCTGAATTAACAAATGAACTGCTTAAAAAAGACGGTAAGGTTCAAGCCACAAATTCATTTAGCGGAGTTAACTATTGGCTAGTTAAAAATAAAATTGAAGTTTTTTATCCAGGCCCGGGACACACTCCAGATAACGTAGTGGTTTGGTTGCCTGAAAGGAAAATATTATTCGGTGGTTGTTTTATTAAACCGTACGGTTTAGGCAATTTGGGTGACGCAAATATAGAAGCTTGGCCAAAGTCCGCCAAATTATTAAAGTCCAAATATGGTAAGGCAAAACTGGTTGTTCCAAGTCACAGTGAAGTTGGAGACGCATCACTCTTGAAACTTACATTAGAGCAGGCGGTTAAAGGGTTAAACGAAAGTAAAAAACCATCAAAACCAAGCAACTAA\tSubclass B1")
+
+            // Merged Summary
+            def merged_summary = path("$outputDir/csvtk/merged_summary.staramr.tsv")
+            assert merged_summary.text.contains("IRIDA_ID\tIsolate ID\tQuality Module\tGenotype\tPredicted Phenotype\tCGE Predicted Phenotype\tPlasmid\tScheme\tSequence Type\tGenome Length\tN50 value\tNumber of Contigs Greater Than Or Equal To 300 bp\tQuality Module Feedback")
+            assert merged_summary.text.contains("SAMPLE2\tSAMPLE_2\tFailed\tblaIMP-42\tampicillin, amoxicillin/clavulanic acid, cefoxitin, ceftriaxone, meropenem\tAmoxicillin, Amoxicillin+Clavulanic acid, Ampicillin, Ampicillin+Clavulanic acid, Cefepime, Cefixime, Cefotaxime, Cefoxitin, Ceftazidime, Ertapenem, Imipenem, Meropenem, Piperacillin, Piperacillin+Tazobactam\tNone\t-\t-\t741\t741\t1\tGenome length is not within the acceptable length range [4000000,6000000] ; N50 value is not greater than the specified minimum value [10000]")
+            assert merged_summary.text.contains("SAMPLE1\tSAMPLE_1\tFailed\tgyrA (A67P)\tciprofloxacin I/R, nalidixic acid\tNalidixic acid, Ciprofloxacin\tNone\t-\t-\t2637\t2637\t1\tGenome length is not within the acceptable length range [4000000,6700000] ; N50 value is not greater than the specified minimum value [10000]")
+        }
+    }
 
     test("Should run without failures") {
         tag "full_pipeline"
@@ -117,10 +200,9 @@ nextflow_pipeline {
             def sample_name_test = new File("$outputDir/staramr/GCF_000196035_B_results/GCF_000196035_B_settings.staramr.txt")
             def sample_name_test_cmd = sample_name_test.readLines().get(0)
             assert sample_name_test_cmd == "command_line                  = /usr/local/bin/staramr search --minimum-contig-length 300 --minimum-N50-value 10000 --minimum-contig-length 300 --unacceptable-number-contigs 1000 --pid-threshold 98 --percent-length-overlap-plasmidfinder 60 --genome-size-lower-bound 4000000 --genome-size-upper-bound 6000000 --percent-length-overlap-resfinder 60 --percent-length-overlap-pointfinder 95 --nprocs 1 -o GCF_000196035_B_results GCF_000196035_B.fasta"
-
         }
-
     }
+
     test("Should run without failures - staramr genus parameters") {
 
         tag "genus_parameters_test"
