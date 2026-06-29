@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Genus specific settings are now available for Salmonella, Shigella, Escherchia, Campylobacter, using the `species` column. [PR #42](https://github.com/phac-nml/staramrnf/pull/42)
 
+### Updated
+
+- Updated StarAMR to version 0.12.3. [PR #43](https://github.com/phac-nml/staramrnf/pull/43)
+
 ## [0.3.3] - 2026-05-06
 
 ### `Updated`
