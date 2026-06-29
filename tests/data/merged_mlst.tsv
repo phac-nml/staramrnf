@@ -1,5 +1,0 @@
-Isolate ID	Scheme	Sequence Type	Status	Score	Locus 1	Locus 2	Locus 3	Locus 4	Locus 5	Locus 6	Locus 7
-A_1_	salmonella	66	PERFECT	100	aroC(34)	dnaN(31)	hemD(35)	hisD(14)	purE(26)	sucA(6)	thrA(8)
-B2	ecoli_achtman_4	678	PERFECT	100	adk(6)	fumC(6)	gyrB(5)	icd(136)	mdh(9)	purA(7)	recA(7)
-B2_GCF_000196035	listeria_2	35	PERFECT	100	abcZ(6)	bglA(5)	cat(6)	dapE(20)	dat(1)	ldh(4)	lhkA(1)
-GCF_000196035_B	listeria_2	35	PERFECT	100	abcZ(6)	bglA(5)	cat(6)	dapE(20)	dat(1)	ldh(4)	lhkA(1)
