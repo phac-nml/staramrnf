@@ -185,23 +185,33 @@ nextflow_pipeline {
         }
     }
 
-    test("Should run without failures - staramr genus parameters") {
+    test("Species Selection") {
 
-        tag "genus_parameters_test"
+        // Sample Sheet:
+        // 1: Salmonella (specified) -> Salmonella
+        // 2: Escherichaia (specified) -> E. coli
+        // 3: Listeria (specified) -> DEFAULT
+        // 4: Salmonella_default (unspecified/blank/default) -> DEFAULT
+        // 5: Escherichaia_default (unspecified/blank/default) -> DEFAULT
+
+        // Note: Listeria (3) will end up using default parameters,
+        // because there are no Listeria-specific parameters.
+
+        // When unspecified, the workflow will use default parameters,
+        // rather than trying to auto-detect the species.
+
+        tag "pipeline_species"
+
         when {
             params {
-                input = "$baseDir/tests/data/samplesheets/test_genus_param_samplesheet.csv"
+                input = "$baseDir/tests/data/samplesheets/species.csv"
                 outdir = "$outputDir"
-                max_memory = "4.GB"
             }
         }
 
         then {
             assert workflow.success
             assert path("$outputDir").exists()
-            assert snapshot(
-            // Snapshot versions.yml (remove Nextflow version since it varies)
-            removeNextflowVersion("$outputDir/pipeline_info/software_versions.yml")).match()
 
             // compare IRIDA Next JSON output
             assert path("$outputDir/iridanext.output.json").exists()
@@ -210,99 +220,101 @@ nextflow_pipeline {
             def iridanext_samples = iridanext_json.files.samples
             def iridanext_metadata = iridanext_json.metadata.samples
 
-            // Salmonella tests
-            def salmonella_metadata = iridanext_metadata.Salmonella
-            assert salmonella_metadata."StarAMR Quality Module" == "Passed"
-            assert salmonella_metadata."StarAMR Predicted Phenotype" == "streptomycin, kanamycin, ampicillin, amoxicillin/clavulanic acid, cefoxitin, ceftriaxone, chloramphenicol, trimethoprim, ciprofloxacin I/R, nalidixic acid, sulfisoxazole, tetracycline"
-            assert salmonella_metadata."StarAMR CGE Predicted Phenotype" == "Spectinomycin, Streptomycin, Neomycin, Kanamycin, Lividomycin, Paromomycin, Ribostamycin, Amoxicillin, Amoxicillin+Clavulanic acid, Ampicillin, Ampicillin+Clavulanic acid, Cefotaxime, Cefoxitin, Ceftazidime, Piperacillin, Piperacillin+Tazobactam, Ticarcillin, Ticarcillin+Clavulanic acid, Cephalothin, Chloramphenicol, Trimethoprim, Nalidixic acid, Ciprofloxacin, Sulfamethoxazole, Doxycycline, Tetracycline"
-            assert salmonella_metadata."StarAMR Genotype" == "aadA1, aadA2, aadA2, aph(3'')-Ib, aph(3')-Ia, blaCMY-2, blaTEM-1B, CmlA7, dfrA12, gyrA (D87N), gyrA (S83F), sul1, sul3, tet(A)"
-            assert salmonella_metadata."StarAMR Plasmid" == "IncFIB(K), IncFIB(S), IncFII(S)"
-            assert salmonella_metadata."StarAMR Scheme" == "salmonella"
-            assert salmonella_metadata."StarAMR Sequence Type" == "66"
-            assert salmonella_metadata."StarAMR N50 value": "4755700"
-            assert salmonella_metadata."StarAMR Genome Length": "4944000"
+            // Salmonella Specified
+            def salmonella_specified = iridanext_metadata.Salmonella
+            assert salmonella_specified."StarAMR Quality Module" == "Passed"
+            assert salmonella_specified."StarAMR Predicted Phenotype" == "streptomycin, kanamycin, ampicillin, amoxicillin/clavulanic acid, cefoxitin, ceftriaxone, chloramphenicol, trimethoprim, ciprofloxacin I/R, nalidixic acid, sulfisoxazole, tetracycline"
+            assert salmonella_specified."StarAMR CGE Predicted Phenotype" == "Spectinomycin, Streptomycin, Neomycin, Kanamycin, Lividomycin, Paromomycin, Ribostamycin, Amoxicillin, Amoxicillin+Clavulanic acid, Ampicillin, Ampicillin+Clavulanic acid, Cefotaxime, Cefoxitin, Ceftazidime, Piperacillin, Piperacillin+Tazobactam, Ticarcillin, Ticarcillin+Clavulanic acid, Cephalothin, Chloramphenicol, Trimethoprim, Nalidixic acid, Ciprofloxacin, Sulfamethoxazole, Doxycycline, Tetracycline"
+            assert salmonella_specified."StarAMR Genotype" == "aadA1, aadA2, aadA2, aph(3'')-Ib, aph(3')-Ia, blaCMY-2, blaTEM-1B, CmlA7, dfrA12, gyrA (D87N), gyrA (S83F), sul1, sul3, tet(A)"
+            assert salmonella_specified."StarAMR Plasmid" == "IncFIB(K), IncFIB(S), IncFII(S)"
+            assert salmonella_specified."StarAMR Scheme" == "salmonella"
+            assert salmonella_specified."StarAMR Sequence Type" == "66"
+            assert salmonella_specified."StarAMR N50 value": "4755700"
+            assert salmonella_specified."StarAMR Genome Length": "4944000"
 
-            def salmonella_metadata_default = iridanext_metadata.Salmonella_default
-            assert salmonella_metadata_default."StarAMR Quality Module" == "Passed"
-            assert salmonella_metadata_default."StarAMR Predicted Phenotype" == "streptomycin, kanamycin, ampicillin, amoxicillin/clavulanic acid, cefoxitin, ceftriaxone, chloramphenicol, trimethoprim, sulfisoxazole, tetracycline"
-            assert salmonella_metadata_default."StarAMR CGE Predicted Phenotype" == "Spectinomycin, Streptomycin, Neomycin, Kanamycin, Lividomycin, Paromomycin, Ribostamycin, Amoxicillin, Amoxicillin+Clavulanic acid, Ampicillin, Ampicillin+Clavulanic acid, Cefotaxime, Cefoxitin, Ceftazidime, Piperacillin, Piperacillin+Tazobactam, Ticarcillin, Ticarcillin+Clavulanic acid, Cephalothin, Chloramphenicol, Trimethoprim, Sulfamethoxazole, Doxycycline, Tetracycline"
-            assert salmonella_metadata_default."StarAMR Genotype" == "aadA1, aadA2, aadA2, aph(3\'\')-Ib, aph(3\')-Ia, blaCMY-2, blaTEM-1B, CmlA7, dfrA12, sul1, sul3, tet(A)"
-            assert salmonella_metadata_default."StarAMR Plasmid" == "IncFIB(K), IncFIB(S), IncFII(S)"
-            assert salmonella_metadata_default."StarAMR Scheme" == "salmonella"
-            assert salmonella_metadata_default."StarAMR Sequence Type" == "66"
-            assert salmonella_metadata_default."StarAMR N50 value": "4755700"
-            assert salmonella_metadata_default."StarAMR Genome Length": "4944000"
+            // Salmonella Unspecified / Blank / Default
+            def salmonella_unspecified = iridanext_metadata.Salmonella_default
+            assert salmonella_unspecified."StarAMR Quality Module" == "Passed"
+            assert salmonella_unspecified."StarAMR Predicted Phenotype" == "streptomycin, kanamycin, ampicillin, amoxicillin/clavulanic acid, cefoxitin, ceftriaxone, chloramphenicol, trimethoprim, sulfisoxazole, tetracycline"
+            assert salmonella_unspecified."StarAMR CGE Predicted Phenotype" == "Spectinomycin, Streptomycin, Neomycin, Kanamycin, Lividomycin, Paromomycin, Ribostamycin, Amoxicillin, Amoxicillin+Clavulanic acid, Ampicillin, Ampicillin+Clavulanic acid, Cefotaxime, Cefoxitin, Ceftazidime, Piperacillin, Piperacillin+Tazobactam, Ticarcillin, Ticarcillin+Clavulanic acid, Cephalothin, Chloramphenicol, Trimethoprim, Sulfamethoxazole, Doxycycline, Tetracycline"
+            assert salmonella_unspecified."StarAMR Genotype" == "aadA1, aadA2, aadA2, aph(3\'\')-Ib, aph(3\')-Ia, blaCMY-2, blaTEM-1B, CmlA7, dfrA12, sul1, sul3, tet(A)"
+            assert salmonella_unspecified."StarAMR Plasmid" == "IncFIB(K), IncFIB(S), IncFII(S)"
+            assert salmonella_unspecified."StarAMR Scheme" == "salmonella"
+            assert salmonella_unspecified."StarAMR Sequence Type" == "66"
+            assert salmonella_unspecified."StarAMR N50 value": "4755700"
+            assert salmonella_unspecified."StarAMR Genome Length": "4944000"
 
-            // Listeria test
-            def listeria_metadata = iridanext_metadata.Listeria
-            assert listeria_metadata."StarAMR Quality Module" == "Failed"
-            assert listeria_metadata."StarAMR Predicted Phenotype" == "fosfomycin"
-            assert listeria_metadata."StarAMR CGE Predicted Phenotype" == "Fosfomycin"
-            assert listeria_metadata."StarAMR Genotype" == "fosX"
-            assert listeria_metadata."StarAMR Plasmid" == "None"
-            assert listeria_metadata."StarAMR Scheme" == "listeria_2"
-            assert listeria_metadata."StarAMR Sequence Type" == "35"
-            assert listeria_metadata."StarAMR N50 value": "2944528"
-            assert listeria_metadata."StarAMR Genome Length": "2944528"
+            // Listeria Specified -> DEFAULT (No Listeria-specific parameters)
+            def listeria_specified = iridanext_metadata.Listeria
+            assert listeria_specified."StarAMR Quality Module" == "Failed"
+            assert listeria_specified."StarAMR Predicted Phenotype" == "fosfomycin"
+            assert listeria_specified."StarAMR CGE Predicted Phenotype" == "Fosfomycin"
+            assert listeria_specified."StarAMR Genotype" == "fosX"
+            assert listeria_specified."StarAMR Plasmid" == "None"
+            assert listeria_specified."StarAMR Scheme" == "listeria_2"
+            assert listeria_specified."StarAMR Sequence Type" == "35"
+            assert listeria_specified."StarAMR N50 value": "2944528"
+            assert listeria_specified."StarAMR Genome Length": "2944528"
 
-            // E coli tests
+            // E coli Specified
+            def ecoli_specified = iridanext_metadata.Escherichaia
+            assert ecoli_specified."StarAMR Quality Module" == "Passed"
+            assert ecoli_specified."StarAMR Predicted Phenotype" == "streptomycin, kanamycin, ampicillin, ceftriaxone, trimethoprim, ciprofloxacin I/R, nalidixic acid, sulfisoxazole, tetracycline"
+            assert ecoli_specified."StarAMR CGE Predicted Phenotype" == "Streptomycin, Amoxicillin, Ampicillin, Aztreonam, Cefepime, Cefotaxime, Ceftazidime, Ceftriaxone, Piperacillin, Ticarcillin, Cephalothin, Trimethoprim, Nalidixic acid, Ciprofloxacin, Sulfamethoxazole, Doxycycline, Tetracycline"
+            assert ecoli_specified."StarAMR Genotype" == "aph(3'')-Ib, aph(6)-Id, blaCTX-M-15, blaTEM-1B, dfrA7, gyrA (S83A), sul1, sul2, tet(A)"
+            assert ecoli_specified."StarAMR Plasmid" == "IncQ1"
+            assert ecoli_specified."StarAMR Scheme" == "ecoli_achtman_4"
+            assert ecoli_specified."StarAMR Sequence Type" == "678"
+            assert ecoli_specified."StarAMR N50 value": "122025"
+            assert ecoli_specified."StarAMR Genome Length": "5333525"
 
-            def ecoli_metadata = iridanext_metadata.Escherichaia
-            assert ecoli_metadata."StarAMR Quality Module" == "Passed"
-            assert ecoli_metadata."StarAMR Predicted Phenotype" == "streptomycin, kanamycin, ampicillin, ceftriaxone, trimethoprim, ciprofloxacin I/R, nalidixic acid, sulfisoxazole, tetracycline"
-            assert ecoli_metadata."StarAMR CGE Predicted Phenotype" == "Streptomycin, Amoxicillin, Ampicillin, Aztreonam, Cefepime, Cefotaxime, Ceftazidime, Ceftriaxone, Piperacillin, Ticarcillin, Cephalothin, Trimethoprim, Nalidixic acid, Ciprofloxacin, Sulfamethoxazole, Doxycycline, Tetracycline"
-            assert ecoli_metadata."StarAMR Genotype" == "aph(3'')-Ib, aph(6)-Id, blaCTX-M-15, blaTEM-1B, dfrA7, gyrA (S83A), sul1, sul2, tet(A)"
-            assert ecoli_metadata."StarAMR Plasmid" == "IncQ1"
-            assert ecoli_metadata."StarAMR Scheme" == "ecoli_achtman_4"
-            assert ecoli_metadata."StarAMR Sequence Type" == "678"
-            assert ecoli_metadata."StarAMR N50 value": "122025"
-            assert ecoli_metadata."StarAMR Genome Length": "5333525"
-
-            def ecoli_metadata_default = iridanext_metadata.Escherichaia_default
-            assert ecoli_metadata_default."StarAMR Quality Module" == "Passed"
-            assert ecoli_metadata_default."StarAMR Predicted Phenotype" == "streptomycin, kanamycin, ampicillin, ceftriaxone, trimethoprim, sulfisoxazole, tetracycline"
-            assert ecoli_metadata_default."StarAMR CGE Predicted Phenotype" == "Streptomycin, Amoxicillin, Ampicillin, Aztreonam, Cefepime, Cefotaxime, Ceftazidime, Ceftriaxone, Piperacillin, Ticarcillin, Cephalothin, Trimethoprim, Sulfamethoxazole, Doxycycline, Tetracycline"
-            assert ecoli_metadata_default."StarAMR Genotype" == "aph(3\'\')-Ib, aph(6)-Id, blaCTX-M-15, blaTEM-1B, dfrA7, sul1, sul2, tet(A)"
-            assert ecoli_metadata_default."StarAMR Plasmid" == "IncQ1"
-            assert ecoli_metadata_default."StarAMR Scheme" == "ecoli_achtman_4"
-            assert ecoli_metadata_default."StarAMR Sequence Type" == "678"
-            assert ecoli_metadata_default."StarAMR N50 value": "122025"
-            assert ecoli_metadata_default."StarAMR Genome Length": "5333525"
+            // E coli Unspecified / Blank / Default
+            def ecoli_unspecified = iridanext_metadata.Escherichaia_default
+            assert ecoli_unspecified."StarAMR Quality Module" == "Passed"
+            assert ecoli_unspecified."StarAMR Predicted Phenotype" == "streptomycin, kanamycin, ampicillin, ceftriaxone, trimethoprim, sulfisoxazole, tetracycline"
+            assert ecoli_unspecified."StarAMR CGE Predicted Phenotype" == "Streptomycin, Amoxicillin, Ampicillin, Aztreonam, Cefepime, Cefotaxime, Ceftazidime, Ceftriaxone, Piperacillin, Ticarcillin, Cephalothin, Trimethoprim, Sulfamethoxazole, Doxycycline, Tetracycline"
+            assert ecoli_unspecified."StarAMR Genotype" == "aph(3\'\')-Ib, aph(6)-Id, blaCTX-M-15, blaTEM-1B, dfrA7, sul1, sul2, tet(A)"
+            assert ecoli_unspecified."StarAMR Plasmid" == "IncQ1"
+            assert ecoli_unspecified."StarAMR Scheme" == "ecoli_achtman_4"
+            assert ecoli_unspecified."StarAMR Sequence Type" == "678"
+            assert ecoli_unspecified."StarAMR N50 value": "122025"
+            assert ecoli_unspecified."StarAMR Genome Length": "5333525"
 
             // Check the commandline parameters modified by genus selection
 
-            // Salmonella with genus parameters
+            // Salmonella with genus parameters (specified)
             assert path("$outputDir/staramr/Salmonella_results/Salmonella_settings.staramr.txt").exists()
             def salmonella_settings = new File("$outputDir/staramr/Salmonella_results/Salmonella_settings.staramr.txt")
             def salmonella_cmd = salmonella_settings.readLines().get(0)
             assert salmonella_cmd == "command_line                  = /usr/local/bin/staramr search --pointfinder-organism salmonella --minimum-contig-length 300 --minimum-N50-value 10000 --minimum-contig-length 300 --unacceptable-number-contigs 1000 --pid-threshold 98 --percent-length-overlap-plasmidfinder 60 --genome-size-lower-bound 4000000 --genome-size-upper-bound 6700000 --percent-length-overlap-resfinder 52 --percent-length-overlap-pointfinder 95 --nprocs 1 -o Salmonella_results Salmonella.fasta"
 
-            // Salmonella with default parameters as no genus specified
+            // Salmonella with default parameters as no genus specified (unspecified)
             assert path("$outputDir/staramr/Salmonella_default_results/Salmonella_default_settings.staramr.txt").exists()
             def salmonella_default_settings = new File("$outputDir/staramr/Salmonella_default_results/Salmonella_default_settings.staramr.txt")
             def salmonella_default_cmd = salmonella_default_settings.readLines().get(0)
             assert salmonella_default_cmd == "command_line                  = /usr/local/bin/staramr search --minimum-contig-length 300 --minimum-N50-value 10000 --minimum-contig-length 300 --unacceptable-number-contigs 1000 --pid-threshold 98 --percent-length-overlap-plasmidfinder 60 --nprocs 1 -o Salmonella_default_results Salmonella_default.fasta"
 
-            // Ecoli with genus parameters
+            // Ecoli with genus parameters (specified)
             assert path("$outputDir/staramr/Escherichaia_results/Escherichaia_settings.staramr.txt").exists()
             def ecoli_settings = new File("$outputDir/staramr/Escherichaia_results/Escherichaia_settings.staramr.txt")
             def ecoli_cmd = ecoli_settings.readLines().get(0)
             assert ecoli_cmd == "command_line                  = /usr/local/bin/staramr search --pointfinder-organism escherichia_coli --minimum-contig-length 300 --minimum-N50-value 10000 --minimum-contig-length 300 --unacceptable-number-contigs 1000 --pid-threshold 98 --percent-length-overlap-plasmidfinder 60 --genome-size-lower-bound 4000000 --genome-size-upper-bound 6700000 --percent-length-overlap-resfinder 52 --percent-length-overlap-pointfinder 95 --nprocs 1 -o Escherichaia_results Escherichaia.fasta"
 
-            // Ecoli with default parameters
+            // Ecoli with default parameters (unspecified)
             assert path("$outputDir/staramr/Escherichaia_default_results/Escherichaia_default_settings.staramr.txt").exists()
             def ecoli_default_settings = new File("$outputDir/staramr/Escherichaia_default_results/Escherichaia_default_settings.staramr.txt")
             def ecoli_default_cmd = ecoli_default_settings.readLines().get(0)
             assert ecoli_default_cmd == "command_line                  = /usr/local/bin/staramr search --minimum-contig-length 300 --minimum-N50-value 10000 --minimum-contig-length 300 --unacceptable-number-contigs 1000 --pid-threshold 98 --percent-length-overlap-plasmidfinder 60 --nprocs 1 -o Escherichaia_default_results Escherichaia_default.fasta"
 
+            // Listeria Specified
             // Listeria will run with default parameters
+            // This is because Listeria is currently unsupported and
+            // there are no specific parameters, so when specified,
+            // it defaults to the workflow default parameters.
             assert path("$outputDir/staramr/Listeria_results/Listeria_settings.staramr.txt").exists()
             def listeria_settings = new File("$outputDir/staramr/Listeria_results/Listeria_settings.staramr.txt")
             def listeria_cmd = listeria_settings.readLines().get(0)
             assert listeria_cmd == "command_line                  = /usr/local/bin/staramr search --minimum-contig-length 300 --minimum-N50-value 10000 --minimum-contig-length 300 --unacceptable-number-contigs 1000 --pid-threshold 98 --percent-length-overlap-plasmidfinder 60 --genome-size-lower-bound 4000000 --genome-size-upper-bound 6000000 --percent-length-overlap-resfinder 60 --percent-length-overlap-pointfinder 95 --nprocs 1 -o Listeria_results Listeria.fasta"
-
         }
-
     }
-
 }
