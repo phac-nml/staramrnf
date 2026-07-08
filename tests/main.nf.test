@@ -217,7 +217,7 @@ nextflow_pipeline {
             assert path("$outputDir/staramr/Salmonella_default_results/Salmonella_default_settings.staramr.txt").exists()
             def salmonella_default_settings = new File("$outputDir/staramr/Salmonella_default_results/Salmonella_default_settings.staramr.txt")
             def salmonella_default_cmd = salmonella_default_settings.readLines().get(0)
-            assert salmonella_default_cmd == "command_line                  = /usr/local/bin/staramr search --minimum-contig-length 300 --minimum-N50-value 10000 --minimum-contig-length 300 --unacceptable-number-contigs 1000 --pid-threshold 98 --percent-length-overlap-plasmidfinder 60 --nprocs 1 -o Salmonella_default_results Salmonella_default.fasta"
+            assert salmonella_default_cmd == "command_line                  = /usr/local/bin/staramr search --minimum-contig-length 300 --minimum-N50-value 10000 --minimum-contig-length 300 --unacceptable-number-contigs 1000 --pid-threshold 98 --percent-length-overlap-plasmidfinder 60 --genome-size-lower-bound 4000000 --genome-size-upper-bound 6000000 --percent-length-overlap-resfinder 60 --percent-length-overlap-pointfinder 95 --nprocs 1 -o Salmonella_default_results Salmonella_default.fasta"
 
             // Ecoli with genus parameters
             assert path("$outputDir/staramr/Escherichaia_results/Escherichaia_settings.staramr.txt").exists()
@@ -229,7 +229,7 @@ nextflow_pipeline {
             assert path("$outputDir/staramr/Escherichaia_default_results/Escherichaia_default_settings.staramr.txt").exists()
             def ecoli_default_settings = new File("$outputDir/staramr/Escherichaia_default_results/Escherichaia_default_settings.staramr.txt")
             def ecoli_default_cmd = ecoli_default_settings.readLines().get(0)
-            assert ecoli_default_cmd == "command_line                  = /usr/local/bin/staramr search --minimum-contig-length 300 --minimum-N50-value 10000 --minimum-contig-length 300 --unacceptable-number-contigs 1000 --pid-threshold 98 --percent-length-overlap-plasmidfinder 60 --nprocs 1 -o Escherichaia_default_results Escherichaia_default.fasta"
+            assert ecoli_default_cmd == "command_line                  = /usr/local/bin/staramr search --minimum-contig-length 300 --minimum-N50-value 10000 --minimum-contig-length 300 --unacceptable-number-contigs 1000 --pid-threshold 98 --percent-length-overlap-plasmidfinder 60 --genome-size-lower-bound 4000000 --genome-size-upper-bound 6000000 --percent-length-overlap-resfinder 60 --percent-length-overlap-pointfinder 95 --nprocs 1 -o Escherichaia_default_results Escherichaia_default.fasta"
 
             // Listeria will run with default parameters
             assert path("$outputDir/staramr/Listeria_results/Listeria_settings.staramr.txt").exists()
