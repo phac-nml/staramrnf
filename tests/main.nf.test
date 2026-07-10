@@ -1,24 +1,25 @@
 nextflow_pipeline {
 
-    name "Test Workflow main.nf"
+    name "StarAMR Nextflow Workflow"
     script "main.nf"
 
-    test("Should run without failures") {
-        tag "full_pipeline"
+    test("Basic Workflow Test") {
+        // Sample Sheet:
+        // SAMPLE1: The Salmonella PointFinder mutation gyrA (A67P) is identified.
+        // SAMPLE2: The ResFinder mutation blaIMP-42 is identified.
+
+        tag "pipeline_basic"
+
         when {
             params {
-                input = "$baseDir/tests/assets/test_samplesheet.csv"
+                input = "$baseDir/tests/data/samplesheets/basic.csv"
                 outdir = "$outputDir"
-                max_memory = "4.GB"
             }
         }
 
         then {
             assert workflow.success
             assert path("$outputDir").exists()
-            assert snapshot(
-            // Snapshot versions.yml (remove Nextflow version since it varies)
-            removeNextflowVersion("$outputDir/pipeline_info/software_versions.yml")).match()
 
             // compare IRIDA Next JSON output
             assert path("$outputDir/iridanext.output.json").exists()
@@ -27,101 +28,293 @@ nextflow_pipeline {
             def iridanext_samples = iridanext_json.files.samples
             def iridanext_metadata = iridanext_json.metadata.samples
 
-            // Salmonella tests
-            def salmonella_metadata = iridanext_metadata.GCA_000008105
-            assert salmonella_metadata."StarAMR Quality Module" == "Passed"
-            assert salmonella_metadata."StarAMR Predicted Phenotype" == "streptomycin, kanamycin, ampicillin, amoxicillin/clavulanic acid, cefoxitin, ceftriaxone, unknown[CmlA7_1_JQ639792], trimethoprim, ciprofloxacin I/R, nalidixic acid, sulfisoxazole, tetracycline"
-            assert salmonella_metadata."StarAMR CGE Predicted Phenotype" == "Spectinomycin, Streptomycin, Neomycin, Kanamycin, Lividomycin, Paromomycin, Ribostamycin, Amoxicillin, Amoxicillin+Clavulanic acid, Ampicillin, Ampicillin+Clavulanic acid, Cefotaxime, Cefoxitin, Ceftazidime, Piperacillin, Piperacillin+Tazobactam, Ticarcillin, Ticarcillin+Clavulanic acid, Cephalothin, Chloramphenicol, Trimethoprim, Nalidixic acid, Ciprofloxacin, Sulfamethoxazole, Doxycycline, Tetracycline"
-            assert salmonella_metadata."StarAMR Genotype" == "aadA1, aadA2, aadA2, aph(3'')-Ib, aph(3')-Ia, blaCMY-2, blaTEM-1B, CmlA7, dfrA12, gyrA (D87N), gyrA (S83F), sul1, sul3, tet(A)"
-            assert salmonella_metadata."StarAMR Plasmid" == "IncFIB(K), IncFIB(S), IncFII(S)"
-            assert salmonella_metadata."StarAMR Scheme" == "salmonella"
-            assert salmonella_metadata."StarAMR Sequence Type" == "66"
-            assert salmonella_metadata."StarAMR N50 value": "4755700"
-            assert salmonella_metadata."StarAMR Genome Length": "4944000"
+            // SAMPLE1: Salmonella gyrA (A67P) Pointfinder
+            def sample1 = iridanext_metadata.SAMPLE1
+            assert sample1."StarAMR Genotype" == "gyrA (A67P)"
+            assert sample1."StarAMR Predicted Phenotype" == "ciprofloxacin I/R, nalidixic acid"
+            assert sample1."StarAMR CGE Predicted Phenotype" == "Nalidixic acid, Ciprofloxacin"
+            assert sample1."StarAMR Plasmid" == "None"
+            assert sample1."StarAMR Scheme" == "-"
+            assert sample1."StarAMR Sequence Type" == "-"
+            assert sample1."StarAMR Genome Length" == "2637"
+            assert sample1."StarAMR N50 value" == "2637"
 
-            // Listeria tests
-            def listeria_metadata = iridanext_metadata.GCF_000196035
-            assert listeria_metadata."StarAMR Quality Module" == "Failed"
-            assert listeria_metadata."StarAMR Predicted Phenotype" == "fosfomycin"
-            assert listeria_metadata."StarAMR CGE Predicted Phenotype" == "Fosfomycin"
-            assert listeria_metadata."StarAMR Genotype" == "fosX"
-            assert listeria_metadata."StarAMR Plasmid" == "None"
-            assert listeria_metadata."StarAMR Scheme" == "listeria_2"
-            assert listeria_metadata."StarAMR Sequence Type" == "35"
-            assert listeria_metadata."StarAMR N50 value": "2944528"
-            assert listeria_metadata."StarAMR Genome Length": "2944528"
+            // SAMPLE2: blaIMP-42 ResFinder
+            def sample2 = iridanext_metadata.SAMPLE2
+            assert sample2."StarAMR Genotype" == "blaIMP-42"
+            assert sample2."StarAMR Predicted Phenotype" == "ampicillin, amoxicillin/clavulanic acid, cefoxitin, ceftriaxone, meropenem"
+            assert sample2."StarAMR CGE Predicted Phenotype" == "Amoxicillin, Amoxicillin+Clavulanic acid, Ampicillin, Ampicillin+Clavulanic acid, Cefepime, Cefixime, Cefotaxime, Cefoxitin, Ceftazidime, Ertapenem, Imipenem, Meropenem, Piperacillin, Piperacillin+Tazobactam"
+            assert sample2."StarAMR Plasmid" == "None"
+            assert sample2."StarAMR Scheme" == "-"
+            assert sample2."StarAMR Sequence Type" == "-"
+            assert sample2."StarAMR Genome Length" == "741"
+            assert sample2."StarAMR N50 value" == "741"
 
-            // E coli tests
-            def ecoli_metadata = iridanext_metadata.GCA_000947975
-            assert ecoli_metadata."StarAMR Quality Module" == "Passed"
-            assert ecoli_metadata."StarAMR Predicted Phenotype" == "streptomycin, kanamycin, ampicillin, ceftriaxone, trimethoprim, ciprofloxacin I/R, nalidixic acid, sulfisoxazole, tetracycline"
-            assert ecoli_metadata."StarAMR CGE Predicted Phenotype" == "Streptomycin, Amoxicillin, Ampicillin, Aztreonam, Cefepime, Cefotaxime, Ceftazidime, Ceftriaxone, Piperacillin, Ticarcillin, Cephalothin, Trimethoprim, Nalidixic acid, Ciprofloxacin, Sulfamethoxazole, Doxycycline, Tetracycline"
-            assert ecoli_metadata."StarAMR Genotype" == "aph(3'')-Ib, aph(6)-Id, blaCTX-M-15, blaTEM-1B, dfrA7, gyrA (S83A), sul1, sul2, tet(A)"
-            assert ecoli_metadata."StarAMR Plasmid" == "IncQ1"
-            assert ecoli_metadata."StarAMR Scheme" == "ecoli_achtman_4"
-            assert ecoli_metadata."StarAMR Sequence Type" == "678"
-            assert ecoli_metadata."StarAMR N50 value": "122025"
-            assert ecoli_metadata."StarAMR Genome Length": "5333525"
+            // Check the final output (csvtk merged files)
 
-            // Check the commandline parameters
-            // Salmonella
-            assert path("$outputDir/staramr/A_1__results/A_1__settings.staramr.txt").exists()
-            def salmonella_settings = new File("$outputDir/staramr/A_1__results/A_1__settings.staramr.txt")
-            def salmonella_cmd = salmonella_settings.readLines().get(0)
-            assert salmonella_cmd == "command_line                  = /usr/local/bin/staramr search --pointfinder-organism salmonella --minimum-contig-length 300 --genome-size-lower-bound 4000000 --genome-size-upper-bound 6000000 --minimum-N50-value 10000 --minimum-contig-length 300 --unacceptable-number-contigs 1000 --pid-threshold 98 --percent-length-overlap-plasmidfinder 60 --percent-length-overlap-resfinder 60 --percent-length-overlap-pointfinder 95 --nprocs 1 -o A_1__results A_1_.fasta"
+            // Merged Detailed Summary:
+            def merged_detailed_summary = path("$outputDir/csvtk/merged_detailed_summary.staramr.tsv")
+            assert merged_detailed_summary.text.contains("Isolate ID\tData\tData Type\tPredicted Phenotype\tCGE Predicted Phenotype\t%Identity\t%Overlap\tHSP Length/Total Length\tContig\tStart\tEnd\tAccession")
+            assert merged_detailed_summary.text.contains("SAMPLE_1\tgyrA (A67P)\tResistance\tciprofloxacin I/R, nalidixic acid\tNalidixic acid,Ciprofloxacin\t99.96\t100.0\t2637/2637\tgyrA\t1.0\t2637.0\t")
+            assert merged_detailed_summary.text.contains("SAMPLE_2\tblaIMP-42\tResistance\tampicillin, amoxicillin/clavulanic acid, cefoxitin, ceftriaxone, meropenem\tAmoxicillin, Amoxicillin+Clavulanic acid, Ampicillin, Ampicillin+Clavulanic acid, Cefepime, Cefixime, Cefotaxime, Cefoxitin, Ceftazidime, Ertapenem, Imipenem, Meropenem, Piperacillin, Piperacillin+Tazobactam\t99.73\t100.0\t741/741\tblaIMP-42_1_AB753456\t1\t741\tAB753456")
 
-            // Ecoli
-            assert path("$outputDir/staramr/B2_results/B2_settings.staramr.txt").exists()
-            def ecoli_settings = new File("$outputDir/staramr/B2_results/B2_settings.staramr.txt")
-            def ecoli_cmd = ecoli_settings.readLines().get(0)
-            assert ecoli_cmd == "command_line                  = /usr/local/bin/staramr search --pointfinder-organism escherichia_coli --minimum-contig-length 300 --genome-size-lower-bound 4000000 --genome-size-upper-bound 6000000 --minimum-N50-value 10000 --minimum-contig-length 300 --unacceptable-number-contigs 1000 --pid-threshold 98 --percent-length-overlap-plasmidfinder 60 --percent-length-overlap-resfinder 60 --percent-length-overlap-pointfinder 95 --nprocs 1 -o B2_results B2.fasta"
+            // Merged MLST
+            def merged_mlst = path("$outputDir/csvtk/merged_mlst.staramr.tsv")
+            assert merged_mlst.text.contains("Isolate ID\tScheme\tSequence Type\tStatus\tScore")
+            assert merged_mlst.text.contains("SAMPLE_2\t-\t-\tNONE\t0")
+            assert merged_mlst.text.contains("SAMPLE_1\t-\t-\tNONE\t0")
 
-            // Listeria
-            assert path("$outputDir/staramr/B2_GCF_000196035_results/B2_GCF_000196035_settings.staramr.txt").exists()
-            def listeria_settings = new File("$outputDir/staramr/B2_GCF_000196035_results/B2_GCF_000196035_settings.staramr.txt")
-            def listeria_cmd = listeria_settings.readLines().get(0)
-            assert listeria_cmd == "command_line                  = /usr/local/bin/staramr search --minimum-contig-length 300 --genome-size-lower-bound 4000000 --genome-size-upper-bound 6000000 --minimum-N50-value 10000 --minimum-contig-length 300 --unacceptable-number-contigs 1000 --pid-threshold 98 --percent-length-overlap-plasmidfinder 60 --percent-length-overlap-resfinder 60 --percent-length-overlap-pointfinder 95 --nprocs 1 -o B2_GCF_000196035_results B2_GCF_000196035.fasta"
+            // Merged PlasmidFinder
+            def merged_plasmidfinder = path("$outputDir/csvtk/merged_plasmidfinder.staramr.tsv")
+            assert merged_plasmidfinder.text.contains("Isolate ID\tPlasmid\t%Identity\t%Overlap\tHSP Length/Total Length\tContig\tStart\tEnd\tAccession")
 
-            // Check CSVTK_concat output (merged_*) files
+            // Merged PointFinder
+            def merged_pointfinder = path("$outputDir/csvtk/merged_pointfinder.staramr.tsv")
+            assert merged_pointfinder.text.contains("Isolate ID\tGene\tPredicted Phenotype\tCGE Predicted Phenotype\tType\tPosition\tMutation\t%Identity\t%Overlap\tHSP Length/Total Length\tContig\tStart\tEnd\tPointfinder Position\tCGE Notes\tCGE Required Mutation\tCGE Mechanism\tCGE PMID")
+            assert merged_pointfinder.text.contains("SAMPLE_1\tgyrA (A67P)\tciprofloxacin I/R, nalidixic acid\tNalidixic acid,Ciprofloxacin\tcodon\t67\tGCC -> CCC (A -> P)\t99.96\t100.00\t2637/2637\tgyrA\t1\t2637\tA67P\t\tgyrA_G81C.S.H.D\tTarget modification\t7492118")
 
-            // merged_detailed_summary.tsv
-            def actual_detailed_summary_tsv = path("$outputDir/csvtk/merged_detailed_summary.staramr.tsv")
-            def expected_detailed_summary_tsv = path("$baseDir/tests/data/merged_detailed_summary.tsv")
-            assert actual_detailed_summary_tsv.readLines().sort() == expected_detailed_summary_tsv.readLines().sort()
+            // Merged ResFinder
+            def merged_resfinder = path("$outputDir/csvtk/merged_resfinder.staramr.tsv")
+            assert merged_resfinder.text.contains("Isolate ID\tGene\tPredicted Phenotype\tCGE Predicted Phenotype\t%Identity\t%Overlap\tHSP Length/Total Length\tContig\tStart\tEnd\tAccession\tSequence\tCGE Notes")
+            assert merged_resfinder.text.contains("SAMPLE_2\tblaIMP-42\tampicillin, amoxicillin/clavulanic acid, cefoxitin, ceftriaxone, meropenem\tAmoxicillin, Amoxicillin+Clavulanic acid, Ampicillin, Ampicillin+Clavulanic acid, Cefepime, Cefixime, Cefotaxime, Cefoxitin, Ceftazidime, Ertapenem, Imipenem, Meropenem, Piperacillin, Piperacillin+Tazobactam\t99.73\t100.00\t741/741\tblaIMP-42_1_AB753456\t1\t741\tAB753456\tATGAGCAAGTTATCTGCATTCTTTATATTTTTGTTTTGCAGCATTGATACCGCAGCAGAGTCTTTGCCAGATTTAAAAATTGAAAAGCTTGATGAAGGCGTTTATGTTCATACTTCGTTTGAAGAAGTTAACAGGTGGGGCGTTGTTCCTAAACATGGTTTGGTGGTTCTTGTAAATGCTGAGGCTTACCTAATTGACACTCCATTTACGGCTAAAGATACTGAAAAGTTAGTCACTTGGTTTGTGGAGCGTGGCTATAAAATAAAAGGCAGCATTTCCTCTCATTTTCATAGCGACAGCACGGGCGGAATAGAGTGGCTTAATTCTCGATCTATCCCCACGTATGCATCTGAATTAACAAATGAACTGCTTAAAAAAGACGGTAAGGTTCAAGCCACAAATTCATTTAGCGGAGTTAACTATTGGCTAGTTAAAAATAAAATTGAAGTTTTTTATCCAGGCCCGGGACACACTCCAGATAACGTAGTGGTTTGGTTGCCTGAAAGGAAAATATTATTCGGTGGTTGTTTTATTAAACCGTACGGTTTAGGCAATTTGGGTGACGCAAATATAGAAGCTTGGCCAAAGTCCGCCAAATTATTAAAGTCCAAATATGGTAAGGCAAAACTGGTTGTTCCAAGTCACAGTGAAGTTGGAGACGCATCACTCTTGAAACTTACATTAGAGCAGGCGGTTAAAGGGTTAAACGAAAGTAAAAAACCATCAAAACCAAGCAACTAA\tSubclass B1")
 
-            // merged_mlst.tsv
-            def actual_mlst_tsv = path("$outputDir/csvtk/merged_mlst.staramr.tsv")
-            def expected_mlst_tsv = path("$baseDir/tests/data/merged_mlst.tsv")
-            assert actual_mlst_tsv.readLines().sort() == expected_mlst_tsv.readLines().sort()
-
-            // merged_plasmidfinder.tsv
-            def actual_plasmidfinder_tsv = path("$outputDir/csvtk/merged_plasmidfinder.staramr.tsv")
-            def expected_plasmidfinder_tsv = path("$baseDir/tests/data/merged_plasmidfinder.tsv")
-            assert actual_plasmidfinder_tsv.readLines().sort() == expected_plasmidfinder_tsv.readLines().sort()
-
-            // merged_pointfinder.tsv
-            def actual_pointfinder_tsv = path("$outputDir/csvtk/merged_pointfinder.staramr.tsv")
-            def expected_pointfinder_tsv = path("$baseDir/tests/data/merged_pointfinder.tsv")
-            assert actual_pointfinder_tsv.readLines().sort() == expected_pointfinder_tsv.readLines().sort()
-
-            // merged_resfinder.tsv
-            def actual_resfinder_tsv = path("$outputDir/csvtk/merged_resfinder.staramr.tsv")
-            def expected_resfinder_tsv = path("$baseDir/tests/data/merged_resfinder.tsv")
-            assert actual_resfinder_tsv.readLines().sort() == expected_resfinder_tsv.readLines().sort()
-
-            // merged_summary.tsv
-            def actual_summary_tsv = path("$outputDir/csvtk/merged_summary.staramr.tsv")
-            def expected_summary_tsv = path("$baseDir/tests/data/merged_summary.tsv")
-            assert actual_summary_tsv.readLines().sort() == expected_summary_tsv.readLines().sort()
-
-            // Check that Listeria, without a value in the sample_name column, runs by using the sample as the sample_name
-            assert path("$outputDir/staramr/GCF_000196035_B_results/GCF_000196035_B_settings.staramr.txt").exists()
-            def sample_name_test = new File("$outputDir/staramr/GCF_000196035_B_results/GCF_000196035_B_settings.staramr.txt")
-            def sample_name_test_cmd = sample_name_test.readLines().get(0)
-            assert sample_name_test_cmd == "command_line                  = /usr/local/bin/staramr search --minimum-contig-length 300 --genome-size-lower-bound 4000000 --genome-size-upper-bound 6000000 --minimum-N50-value 10000 --minimum-contig-length 300 --unacceptable-number-contigs 1000 --pid-threshold 98 --percent-length-overlap-plasmidfinder 60 --percent-length-overlap-resfinder 60 --percent-length-overlap-pointfinder 95 --nprocs 1 -o GCF_000196035_B_results GCF_000196035_B.fasta"
-
+            // Merged Summary
+            def merged_summary = path("$outputDir/csvtk/merged_summary.staramr.tsv")
+            assert merged_summary.text.contains("IRIDA_ID\tIsolate ID\tQuality Module\tGenotype\tPredicted Phenotype\tCGE Predicted Phenotype\tPlasmid\tScheme\tSequence Type\tGenome Length\tN50 value\tNumber of Contigs Greater Than Or Equal To 300 bp\tQuality Module Feedback")
+            assert merged_summary.text.contains("SAMPLE2\tSAMPLE_2\tFailed\tblaIMP-42\tampicillin, amoxicillin/clavulanic acid, cefoxitin, ceftriaxone, meropenem\tAmoxicillin, Amoxicillin+Clavulanic acid, Ampicillin, Ampicillin+Clavulanic acid, Cefepime, Cefixime, Cefotaxime, Cefoxitin, Ceftazidime, Ertapenem, Imipenem, Meropenem, Piperacillin, Piperacillin+Tazobactam\tNone\t-\t-\t741\t741\t1\tGenome length is not within the acceptable length range [4000000,6000000] ; N50 value is not greater than the specified minimum value [10000]")
+            assert merged_summary.text.contains("SAMPLE1\tSAMPLE_1\tFailed\tgyrA (A67P)\tciprofloxacin I/R, nalidixic acid\tNalidixic acid, Ciprofloxacin\tNone\t-\t-\t2637\t2637\t1\tGenome length is not within the acceptable length range [4000000,6700000] ; N50 value is not greater than the specified minimum value [10000]")
         }
-
     }
 
+    test("Sample Name Problems") {
+        // Sample Sheet:
+        // SAMPLE1: "A 1#" (Salmonella PointFinder gyrA (A67P))
+        // SAMPLE2: "B2" (ResFinder blaIMP-42)
+        // SAMPLE3: "B2" (duplicate) (ResFinder CmlA7_1_JQ639792 phenicol)
+        // SAMPLE4: "" (missing) (Resfinder FloR_4_CP136914 phenicol)
+
+        tag "pipeline_sample_name"
+
+        when {
+            params {
+                input = "$baseDir/tests/data/samplesheets/sample_name.csv"
+                outdir = "$outputDir"
+            }
+        }
+
+        then {assert workflow.success
+            assert path("$outputDir").exists()
+
+            // compare IRIDA Next JSON output
+            assert path("$outputDir/iridanext.output.json").exists()
+            def iridanext_json = path("$outputDir/iridanext.output.json").json
+            def iridanext_global = iridanext_json.files.global
+            def iridanext_samples = iridanext_json.files.samples
+            def iridanext_metadata = iridanext_json.metadata.samples
+
+            // SAMPLE1: Salmonella gyrA (A67P) Pointfinder
+            def sample1 = iridanext_metadata.SAMPLE1
+            assert sample1."StarAMR Genotype" == "gyrA (A67P)"
+            assert sample1."StarAMR Predicted Phenotype" == "ciprofloxacin I/R, nalidixic acid"
+            assert sample1."StarAMR CGE Predicted Phenotype" == "Nalidixic acid, Ciprofloxacin"
+
+            // SAMPLE2: blaIMP-42 ResFinder
+            def sample2 = iridanext_metadata.SAMPLE2
+            assert sample2."StarAMR Genotype" == "blaIMP-42"
+            assert sample2."StarAMR Predicted Phenotype" == "ampicillin, amoxicillin/clavulanic acid, cefoxitin, ceftriaxone, meropenem"
+            assert sample2."StarAMR CGE Predicted Phenotype" == "Amoxicillin, Amoxicillin+Clavulanic acid, Ampicillin, Ampicillin+Clavulanic acid, Cefepime, Cefixime, Cefotaxime, Cefoxitin, Ceftazidime, Ertapenem, Imipenem, Meropenem, Piperacillin, Piperacillin+Tazobactam"
+
+            // SAMPLE3: ResFinder CmlA7_1_JQ639792 phenicol
+            def sample3 = iridanext_metadata.SAMPLE3
+            assert sample3."StarAMR Genotype" == "CmlA7"
+            assert sample3."StarAMR Predicted Phenotype" == "chloramphenicol"
+            assert sample3."StarAMR CGE Predicted Phenotype" == "Chloramphenicol"
+
+            // SAMPLE4: Resfinder FloR_4_CP136914 phenicol
+            def sample4 = iridanext_metadata.SAMPLE4
+            assert sample4."StarAMR Genotype" == "FloR"
+            assert sample4."StarAMR Predicted Phenotype" == "chloramphenicol, florfenicol"
+            assert sample4."StarAMR CGE Predicted Phenotype" == "Chloramphenicol, Florphenicol"
+
+            // Check the final output (csvtk merged files)
+
+            // Merged Detailed Summary:
+            // SAMPLE1: "A 1#" -> "A_1_"
+            // SAMPLE2: "B2" (first) -> "B2"
+            // SAMPLE3: "B2" (second) -> "B2_SAMPLE3"
+            // SAMPLE4: "" (missing) -> "SAMPLE4" ('sample' column)
+
+            def merged_detailed_summary = path("$outputDir/csvtk/merged_detailed_summary.staramr.tsv")
+            assert merged_detailed_summary.text.contains("Isolate ID\tData\tData Type\tPredicted Phenotype\tCGE Predicted Phenotype\t%Identity\t%Overlap\tHSP Length/Total Length\tContig\tStart\tEnd\tAccession")
+            assert merged_detailed_summary.text.contains("A_1_\tgyrA (A67P)\tResistance\tciprofloxacin I/R, nalidixic acid\tNalidixic acid,Ciprofloxacin\t99.96\t100.0\t2637/2637\tgyrA\t1.0\t2637.0\t")
+            assert merged_detailed_summary.text.contains("B2\tblaIMP-42\tResistance\tampicillin, amoxicillin/clavulanic acid, cefoxitin, ceftriaxone, meropenem\tAmoxicillin, Amoxicillin+Clavulanic acid, Ampicillin, Ampicillin+Clavulanic acid, Cefepime, Cefixime, Cefotaxime, Cefoxitin, Ceftazidime, Ertapenem, Imipenem, Meropenem, Piperacillin, Piperacillin+Tazobactam\t99.73\t100.0\t741/741\tblaIMP-42_1_AB753456\t1\t741\tAB753456")
+            assert merged_detailed_summary.text.contains("B2_SAMPLE3\tCmlA7\tResistance\tchloramphenicol\tChloramphenicol\t100.0\t100.0\t1314/1314\tCmlA7_1_JQ639792\t1\t1314\tJQ639792")
+            assert merged_detailed_summary.text.contains("SAMPLE4\tFloR\tResistance\tchloramphenicol, florfenicol\tChloramphenicol,Florphenicol\t100.0\t100.0\t1215/1215\tFloR_4_CP136914\t1\t1215\tCP136914")
+
+            // Merged MLST
+            def merged_mlst = path("$outputDir/csvtk/merged_mlst.staramr.tsv")
+            assert merged_mlst.text.contains("Isolate ID\tScheme\tSequence Type\tStatus\tScore")
+            assert merged_mlst.text.contains("A_1_\t-\t-\tNONE\t0")
+            assert merged_mlst.text.contains("B2\t-\t-\tNONE\t0")
+            assert merged_mlst.text.contains("B2_SAMPLE3\t-\t-\tNONE\t0")
+            assert merged_mlst.text.contains("SAMPLE4\t-\t-\tNONE\t0")
+
+            // Merged PlasmidFinder
+            def merged_plasmidfinder = path("$outputDir/csvtk/merged_plasmidfinder.staramr.tsv")
+            assert merged_plasmidfinder.text.contains("Isolate ID\tPlasmid\t%Identity\t%Overlap\tHSP Length/Total Length\tContig\tStart\tEnd\tAccession")
+
+            // Merged PointFinder
+            def merged_pointfinder = path("$outputDir/csvtk/merged_pointfinder.staramr.tsv")
+            assert merged_pointfinder.text.contains("Isolate ID\tGene\tPredicted Phenotype\tCGE Predicted Phenotype\tType\tPosition\tMutation\t%Identity\t%Overlap\tHSP Length/Total Length\tContig\tStart\tEnd\tPointfinder Position\tCGE Notes\tCGE Required Mutation\tCGE Mechanism\tCGE PMID")
+            assert merged_pointfinder.text.contains("A_1_\tgyrA (A67P)\tciprofloxacin I/R, nalidixic acid\tNalidixic acid,Ciprofloxacin\tcodon\t67\tGCC -> CCC (A -> P)\t99.96\t100.00\t2637/2637\tgyrA\t1\t2637\tA67P\t\tgyrA_G81C.S.H.D\tTarget modification\t7492118")
+
+            // Merged ResFinder
+            def merged_resfinder = path("$outputDir/csvtk/merged_resfinder.staramr.tsv")
+            assert merged_resfinder.text.contains("Isolate ID\tGene\tPredicted Phenotype\tCGE Predicted Phenotype\t%Identity\t%Overlap\tHSP Length/Total Length\tContig\tStart\tEnd\tAccession\tSequence\tCGE Notes")
+            assert merged_resfinder.text.contains("B2\tblaIMP-42\tampicillin, amoxicillin/clavulanic acid, cefoxitin, ceftriaxone, meropenem\tAmoxicillin, Amoxicillin+Clavulanic acid, Ampicillin, Ampicillin+Clavulanic acid, Cefepime, Cefixime, Cefotaxime, Cefoxitin, Ceftazidime, Ertapenem, Imipenem, Meropenem, Piperacillin, Piperacillin+Tazobactam\t99.73\t100.00\t741/741\tblaIMP-42_1_AB753456\t1\t741\tAB753456\tATGAGCAAGTTATCTGCATTCTTTATATTTTTGTTTTGCAGCATTGATACCGCAGCAGAGTCTTTGCCAGATTTAAAAATTGAAAAGCTTGATGAAGGCGTTTATGTTCATACTTCGTTTGAAGAAGTTAACAGGTGGGGCGTTGTTCCTAAACATGGTTTGGTGGTTCTTGTAAATGCTGAGGCTTACCTAATTGACACTCCATTTACGGCTAAAGATACTGAAAAGTTAGTCACTTGGTTTGTGGAGCGTGGCTATAAAATAAAAGGCAGCATTTCCTCTCATTTTCATAGCGACAGCACGGGCGGAATAGAGTGGCTTAATTCTCGATCTATCCCCACGTATGCATCTGAATTAACAAATGAACTGCTTAAAAAAGACGGTAAGGTTCAAGCCACAAATTCATTTAGCGGAGTTAACTATTGGCTAGTTAAAAATAAAATTGAAGTTTTTTATCCAGGCCCGGGACACACTCCAGATAACGTAGTGGTTTGGTTGCCTGAAAGGAAAATATTATTCGGTGGTTGTTTTATTAAACCGTACGGTTTAGGCAATTTGGGTGACGCAAATATAGAAGCTTGGCCAAAGTCCGCCAAATTATTAAAGTCCAAATATGGTAAGGCAAAACTGGTTGTTCCAAGTCACAGTGAAGTTGGAGACGCATCACTCTTGAAACTTACATTAGAGCAGGCGGTTAAAGGGTTAAACGAAAGTAAAAAACCATCAAAACCAAGCAACTAA\tSubclass B1")
+            assert merged_resfinder.text.contains("B2_SAMPLE3\tCmlA7\tchloramphenicol\tChloramphenicol\t100.00\t100.00\t1314/1314\tCmlA7_1_JQ639792\t1\t1314\tJQ639792\tATCCTTTTGCTCTACGGGAGCGCCGCCAAATCCTTTGTTCAAGGAGATGGTTTCGTGCGCTCAAAAAACTTTAGTTGGCGGTACTCCCTTGCCGCCACGGTGTTGTTGTTATCACCGTTCGATTTATTGGCATCACTCGGCATGGACATGTACTTGCCAGCAGTGCCGTTTATGCCAAACGCGCTTGGTACGACAGCGAGCACAATTCAGCTTACGCTGACAACGTACTTGGTCATGATTGGTGCCGGTCAGCTCTTGTTTGGACCGCTATCGGACCGACTGGGGCGCCGCCCCGTTCTACTGGGAGGTGGCCTCGCCTACGTTGTGGCGTCAATGGGCCTCGCTCTTACGTCATCGGCTGAAGTCTTTCTGGGGCTTCGGATTCTTCAGGCTTGTGGTGCCTCGGCGTGCCTTGTTTCCACATTTGCAACAGTACGTGACATTTACGCAGGTCGCGAGGAAAGTAATGTCATTTACGGCATACTCGGATCCATGCTGGCCATGGTCCCGGCGGTAGGCCCATTGCTCGGAGCGCTCGTCGACATGTGGCTTGGGTGGCGGGCTATCTTTGCGTTTCTAGGTTTGGGCATGATCGCTGCATCTGCAGCAGCGTGGCGATTCTGGCCTGAAACCCGGGTGCAACGAGTTGCGGGCTTGCAATGGTCGCAGCTGCTACTCCCCGTTAAGTGCCTGAACTTCTGGTTGTACACGTTGTGTTACGCCGCTGGAATGGGTAGCTTCTTCGTCTTTTTCTCCATTGCGCCCGGACTAATGATGGGCAGGCAAGGTGTGTCTCAGCTTGGCTTCAGCCTGCTGTTCGCCACAGTGGCAATTGCCATGGTGTTTACGGCTCGTTTTATGGGGCGTGTGATACCCAAGTGGGGCAGCCCAAGTGTCTTGCGAATGGGAATGGGATGCCTGATAGCTGGAGCAGTATTGCTTGCCATCACCGAAATATGGGCTTCGCAGTCCGTGTTAGGCTTTATTGCTCCAATGTGGCTAGTGGGTATTGGTGTCGCCACAGCGGTATCTGTGTCGCCCAATGGCGCTCTTCGAGGATTCGACCATGTTGCTGGAACGGTCACGGCAGTCTACTTCTGCTTGGGCGGTGTACTGCTAGGAAGCATCGGAACGTTGATCATTTCGCTGTTGCCGCGCAACACGGCTTGGCCGGTTGTCGTGTACTGTTTGACCCTTGCAACAGTCGTGCTCGGTCTGTCTTGTGTTTCCCGAGTGAAGGGCTCTCGCGGCCAGGGGGAGCATGATGTGGTCGCGCTACAAAGTGCGGAAAGTACATCAAATCCCAATCGTTGA\t")
+            assert merged_resfinder.text.contains("SAMPLE4\tFloR\tchloramphenicol, florfenicol\tChloramphenicol,Florphenicol\t100.00\t100.00\t1215/1215\tFloR_4_CP136914\t1\t1215\tCP136914\tATGACCACCACACGCCCCGCGTGGGCCTATACGCTGCCGGCAGCACTGCTGCTGATGGCTCCTTTCGACATCCTCGCTTCACTGGCGATGGATATTTATCTCCCTGTCGTTCCAGCGATGCCCGGCATCCTGAACACGACGCCCGCTATGATCCAACTCACGTTGAGCCTCTATATGGTGATGCTCGGCGTGGGCCAGGTGATTTTTGGTCCGCTCTCAGACAGAATCGGGCGACGGCCAATTCTACTTGCGGGCGCAACGGCTTTCGTCATTGCGTCTCTGGGAGCAGCTTGGTCTTCAACTGCACCGGCCTTTGTCGCTTTCCGTCTACTTCAAGCAGTGGGCGCGTCGGCCATGCTGGTGGCGACGTTCGCGACGGTTCGCGACGTTTATGCCAACCGTCCTGAGGGTGTCGTCATCTACGGCCTTTTCAGTTCGATGCTGGCGTTCGTGCCTGCGCTCGGCCCTATCGCCGGAGCATTGATCGGCGAGTTCTTGGGATGGCAGGCGATATTCATTACTTTGGCTATACTGGCGATGCTCGCACTCCTAAATGCGGGTTTCAGGTGGCACGAAACCCGCCCTCTGGATCAAGTCAAGACGCGCCGATCTGTCTTGCCGATCTTCGCGAGTCCGGCTTTTTGGGTTTACACTGTCGGCTTTAGCGCCGGTATGGGCACCTTCTTCGTCTTCTTCTCGACGGCTCCCCGTGTGCTCATAGGCCAAGCGGAATATTCCGAGATCGGATTCAGCTTTGCCTTCGCCACTGTCGCGCTTGTAATGATCGTGACAACCCGTTTCGCGAAGTCCTTTGTCGCCAGATGGGGCATCGCAGGATGCGTGGCGCGTGGGATGGCGTTGCTTGTTTGCGGAGCGGTCCTGTTGGGGATCGGCGAACTTTACGGCTCGCCGTCATTCCTCACCTTCATCCTACCGATGTGGGTTGTCGCGGTCGGTATTGTCTTCACGGTGTCCGTTACCGCGAACGGCGCTTTGGCAGAGTTCGACGACATCGCGGGATCAGCGGTCGCGTTCTACTTCTGCGTTCAAAGCCTGATAGTCAGCATTGTCGGGACATTGGCGGTGGCACTTTTAAACGGTGACACAGCGTGGCCCGTGATCTGTTACGCCACGGCGATGGCGGTACTGGTTTCGTTGGGGCTGGTGCTCCTTCGGCTCCGTGGGGCTGCCACCGAGAAGTCGCCAGTCGTCTAA\t")
+
+            // Merged Summary
+            def merged_summary = path("$outputDir/csvtk/merged_summary.staramr.tsv")
+            assert merged_summary.text.contains("IRIDA_ID\tIsolate ID\tQuality Module\tGenotype\tPredicted Phenotype\tCGE Predicted Phenotype\tPlasmid\tScheme\tSequence Type\tGenome Length\tN50 value\tNumber of Contigs Greater Than Or Equal To 300 bp\tQuality Module Feedback")
+            assert merged_summary.text.contains("SAMPLE2\tB2\tFailed\tblaIMP-42\tampicillin, amoxicillin/clavulanic acid, cefoxitin, ceftriaxone, meropenem\tAmoxicillin, Amoxicillin+Clavulanic acid, Ampicillin, Ampicillin+Clavulanic acid, Cefepime, Cefixime, Cefotaxime, Cefoxitin, Ceftazidime, Ertapenem, Imipenem, Meropenem, Piperacillin, Piperacillin+Tazobactam\tNone\t-\t-\t741\t741\t1\tGenome length is not within the acceptable length range [4000000,6000000] ; N50 value is not greater than the specified minimum value [10000]")
+            assert merged_summary.text.contains("SAMPLE4\tSAMPLE4\tFailed\tFloR\tchloramphenicol, florfenicol\tChloramphenicol, Florphenicol\tNone\t-\t-\t1215\t1215\t1\tGenome length is not within the acceptable length range [4000000,6000000] ; N50 value is not greater than the specified minimum value [10000]")
+            assert merged_summary.text.contains("SAMPLE3\tB2_SAMPLE3\tFailed\tCmlA7\tchloramphenicol\tChloramphenicol\tNone\t-\t-\t1314\t1314\t1\tGenome length is not within the acceptable length range [4000000,6000000] ; N50 value is not greater than the specified minimum value [10000]")
+            assert merged_summary.text.contains("SAMPLE1\tA_1_\tFailed\tgyrA (A67P)\tciprofloxacin I/R, nalidixic acid\tNalidixic acid, Ciprofloxacin\tNone\t-\t-\t2637\t2637\t1\tGenome length is not within the acceptable length range [4000000,6700000] ; N50 value is not greater than the specified minimum value [10000]")
+        }
+    }
+
+    test("Species Selection") {
+
+        // Sample Sheet:
+        // 1: Salmonella (specified) -> Salmonella
+        // 2: Escherichaia (specified) -> E. coli
+        // 3: Listeria (specified) -> DEFAULT
+        // 4: Salmonella_default (unspecified/blank/default) -> DEFAULT
+        // 5: Escherichaia_default (unspecified/blank/default) -> DEFAULT
+
+        // Note: Listeria (3) will end up using default parameters,
+        // because there are no Listeria-specific parameters.
+
+        // When unspecified, the workflow will use default parameters,
+        // rather than trying to auto-detect the species.
+
+        tag "pipeline_species"
+
+        when {
+            params {
+                input = "$baseDir/tests/data/samplesheets/species.csv"
+                outdir = "$outputDir"
+            }
+        }
+
+        then {
+            assert workflow.success
+            assert path("$outputDir").exists()
+
+            // compare IRIDA Next JSON output
+            assert path("$outputDir/iridanext.output.json").exists()
+            def iridanext_json = path("$outputDir/iridanext.output.json").json
+            def iridanext_global = iridanext_json.files.global
+            def iridanext_samples = iridanext_json.files.samples
+            def iridanext_metadata = iridanext_json.metadata.samples
+
+            // Salmonella Specified
+            def salmonella_specified = iridanext_metadata.Salmonella
+            assert salmonella_specified."StarAMR Quality Module" == "Passed"
+            assert salmonella_specified."StarAMR Predicted Phenotype" == "streptomycin, kanamycin, ampicillin, amoxicillin/clavulanic acid, cefoxitin, ceftriaxone, chloramphenicol, trimethoprim, ciprofloxacin I/R, nalidixic acid, sulfisoxazole, tetracycline"
+            assert salmonella_specified."StarAMR CGE Predicted Phenotype" == "Spectinomycin, Streptomycin, Neomycin, Kanamycin, Lividomycin, Paromomycin, Ribostamycin, Amoxicillin, Amoxicillin+Clavulanic acid, Ampicillin, Ampicillin+Clavulanic acid, Cefotaxime, Cefoxitin, Ceftazidime, Piperacillin, Piperacillin+Tazobactam, Ticarcillin, Ticarcillin+Clavulanic acid, Cephalothin, Chloramphenicol, Trimethoprim, Nalidixic acid, Ciprofloxacin, Sulfamethoxazole, Doxycycline, Tetracycline"
+            assert salmonella_specified."StarAMR Genotype" == "aadA1, aadA2, aadA2, aph(3'')-Ib, aph(3')-Ia, blaCMY-2, blaTEM-1B, CmlA7, dfrA12, gyrA (D87N), gyrA (S83F), sul1, sul3, tet(A)"
+            assert salmonella_specified."StarAMR Plasmid" == "IncFIB(K), IncFIB(S), IncFII(S)"
+            assert salmonella_specified."StarAMR Scheme" == "salmonella"
+            assert salmonella_specified."StarAMR Sequence Type" == "66"
+            assert salmonella_specified."StarAMR N50 value": "4755700"
+            assert salmonella_specified."StarAMR Genome Length": "4944000"
+
+            // Salmonella Unspecified / Blank / Default
+            def salmonella_unspecified = iridanext_metadata.Salmonella_default
+            assert salmonella_unspecified."StarAMR Quality Module" == "Passed"
+            assert salmonella_unspecified."StarAMR Predicted Phenotype" == "streptomycin, kanamycin, ampicillin, amoxicillin/clavulanic acid, cefoxitin, ceftriaxone, chloramphenicol, trimethoprim, sulfisoxazole, tetracycline"
+            assert salmonella_unspecified."StarAMR CGE Predicted Phenotype" == "Spectinomycin, Streptomycin, Neomycin, Kanamycin, Lividomycin, Paromomycin, Ribostamycin, Amoxicillin, Amoxicillin+Clavulanic acid, Ampicillin, Ampicillin+Clavulanic acid, Cefotaxime, Cefoxitin, Ceftazidime, Piperacillin, Piperacillin+Tazobactam, Ticarcillin, Ticarcillin+Clavulanic acid, Cephalothin, Chloramphenicol, Trimethoprim, Sulfamethoxazole, Doxycycline, Tetracycline"
+            assert salmonella_unspecified."StarAMR Genotype" == "aadA1, aadA2, aadA2, aph(3\'\')-Ib, aph(3\')-Ia, blaCMY-2, blaTEM-1B, CmlA7, dfrA12, sul1, sul3, tet(A)"
+            assert salmonella_unspecified."StarAMR Plasmid" == "IncFIB(K), IncFIB(S), IncFII(S)"
+            assert salmonella_unspecified."StarAMR Scheme" == "salmonella"
+            assert salmonella_unspecified."StarAMR Sequence Type" == "66"
+            assert salmonella_unspecified."StarAMR N50 value": "4755700"
+            assert salmonella_unspecified."StarAMR Genome Length": "4944000"
+
+            // Listeria Specified -> DEFAULT (No Listeria-specific parameters)
+            def listeria_specified = iridanext_metadata.Listeria
+            assert listeria_specified."StarAMR Quality Module" == "Failed"
+            assert listeria_specified."StarAMR Predicted Phenotype" == "fosfomycin"
+            assert listeria_specified."StarAMR CGE Predicted Phenotype" == "Fosfomycin"
+            assert listeria_specified."StarAMR Genotype" == "fosX"
+            assert listeria_specified."StarAMR Plasmid" == "None"
+            assert listeria_specified."StarAMR Scheme" == "listeria_2"
+            assert listeria_specified."StarAMR Sequence Type" == "35"
+            assert listeria_specified."StarAMR N50 value": "2944528"
+            assert listeria_specified."StarAMR Genome Length": "2944528"
+
+            // E coli Specified
+            def ecoli_specified = iridanext_metadata.Escherichaia
+            assert ecoli_specified."StarAMR Quality Module" == "Passed"
+            assert ecoli_specified."StarAMR Predicted Phenotype" == "streptomycin, kanamycin, ampicillin, ceftriaxone, trimethoprim, ciprofloxacin I/R, nalidixic acid, sulfisoxazole, tetracycline"
+            assert ecoli_specified."StarAMR CGE Predicted Phenotype" == "Streptomycin, Amoxicillin, Ampicillin, Aztreonam, Cefepime, Cefotaxime, Ceftazidime, Ceftriaxone, Piperacillin, Ticarcillin, Cephalothin, Trimethoprim, Nalidixic acid, Ciprofloxacin, Sulfamethoxazole, Doxycycline, Tetracycline"
+            assert ecoli_specified."StarAMR Genotype" == "aph(3'')-Ib, aph(6)-Id, blaCTX-M-15, blaTEM-1B, dfrA7, gyrA (S83A), sul1, sul2, tet(A)"
+            assert ecoli_specified."StarAMR Plasmid" == "IncQ1"
+            assert ecoli_specified."StarAMR Scheme" == "ecoli_achtman_4"
+            assert ecoli_specified."StarAMR Sequence Type" == "678"
+            assert ecoli_specified."StarAMR N50 value": "122025"
+            assert ecoli_specified."StarAMR Genome Length": "5333525"
+
+            // E coli Unspecified / Blank / Default
+            def ecoli_unspecified = iridanext_metadata.Escherichaia_default
+            assert ecoli_unspecified."StarAMR Quality Module" == "Passed"
+            assert ecoli_unspecified."StarAMR Predicted Phenotype" == "streptomycin, kanamycin, ampicillin, ceftriaxone, trimethoprim, sulfisoxazole, tetracycline"
+            assert ecoli_unspecified."StarAMR CGE Predicted Phenotype" == "Streptomycin, Amoxicillin, Ampicillin, Aztreonam, Cefepime, Cefotaxime, Ceftazidime, Ceftriaxone, Piperacillin, Ticarcillin, Cephalothin, Trimethoprim, Sulfamethoxazole, Doxycycline, Tetracycline"
+            assert ecoli_unspecified."StarAMR Genotype" == "aph(3\'\')-Ib, aph(6)-Id, blaCTX-M-15, blaTEM-1B, dfrA7, sul1, sul2, tet(A)"
+            assert ecoli_unspecified."StarAMR Plasmid" == "IncQ1"
+            assert ecoli_unspecified."StarAMR Scheme" == "ecoli_achtman_4"
+            assert ecoli_unspecified."StarAMR Sequence Type" == "678"
+            assert ecoli_unspecified."StarAMR N50 value": "122025"
+            assert ecoli_unspecified."StarAMR Genome Length": "5333525"
+
+            // Check the commandline parameters modified by genus selection
+
+            // Salmonella with genus parameters (specified)
+            assert path("$outputDir/staramr/Salmonella_results/Salmonella_settings.staramr.txt").exists()
+            def salmonella_settings = new File("$outputDir/staramr/Salmonella_results/Salmonella_settings.staramr.txt")
+            def salmonella_cmd = salmonella_settings.readLines().get(0)
+            assert salmonella_cmd == "command_line                  = /usr/local/bin/staramr search --pointfinder-organism salmonella --minimum-contig-length 300 --minimum-N50-value 10000 --minimum-contig-length 300 --unacceptable-number-contigs 1000 --pid-threshold 98 --percent-length-overlap-plasmidfinder 60 --genome-size-lower-bound 4000000 --genome-size-upper-bound 6700000 --percent-length-overlap-resfinder 52 --percent-length-overlap-pointfinder 95 --nprocs 1 -o Salmonella_results Salmonella.fasta"
+
+            // Salmonella with default parameters as no genus specified (unspecified)
+            assert path("$outputDir/staramr/Salmonella_default_results/Salmonella_default_settings.staramr.txt").exists()
+            def salmonella_default_settings = new File("$outputDir/staramr/Salmonella_default_results/Salmonella_default_settings.staramr.txt")
+            def salmonella_default_cmd = salmonella_default_settings.readLines().get(0)
+            assert salmonella_default_cmd == "command_line                  = /usr/local/bin/staramr search --minimum-contig-length 300 --minimum-N50-value 10000 --minimum-contig-length 300 --unacceptable-number-contigs 1000 --pid-threshold 98 --percent-length-overlap-plasmidfinder 60 --genome-size-lower-bound 4000000 --genome-size-upper-bound 6000000 --percent-length-overlap-resfinder 60 --percent-length-overlap-pointfinder 95 --nprocs 1 -o Salmonella_default_results Salmonella_default.fasta"
+
+            // Ecoli with genus parameters (specified)
+            assert path("$outputDir/staramr/Escherichaia_results/Escherichaia_settings.staramr.txt").exists()
+            def ecoli_settings = new File("$outputDir/staramr/Escherichaia_results/Escherichaia_settings.staramr.txt")
+            def ecoli_cmd = ecoli_settings.readLines().get(0)
+            assert ecoli_cmd == "command_line                  = /usr/local/bin/staramr search --pointfinder-organism escherichia_coli --minimum-contig-length 300 --minimum-N50-value 10000 --minimum-contig-length 300 --unacceptable-number-contigs 1000 --pid-threshold 98 --percent-length-overlap-plasmidfinder 60 --genome-size-lower-bound 4000000 --genome-size-upper-bound 6700000 --percent-length-overlap-resfinder 52 --percent-length-overlap-pointfinder 95 --nprocs 1 -o Escherichaia_results Escherichaia.fasta"
+
+            // Ecoli with default parameters (unspecified)
+            assert path("$outputDir/staramr/Escherichaia_default_results/Escherichaia_default_settings.staramr.txt").exists()
+            def ecoli_default_settings = new File("$outputDir/staramr/Escherichaia_default_results/Escherichaia_default_settings.staramr.txt")
+            def ecoli_default_cmd = ecoli_default_settings.readLines().get(0)
+            assert ecoli_default_cmd == "command_line                  = /usr/local/bin/staramr search --minimum-contig-length 300 --minimum-N50-value 10000 --minimum-contig-length 300 --unacceptable-number-contigs 1000 --pid-threshold 98 --percent-length-overlap-plasmidfinder 60 --genome-size-lower-bound 4000000 --genome-size-upper-bound 6000000 --percent-length-overlap-resfinder 60 --percent-length-overlap-pointfinder 95 --nprocs 1 -o Escherichaia_default_results Escherichaia_default.fasta"
+
+            // Listeria Specified
+            // Listeria will run with default parameters
+            // This is because Listeria is currently unsupported and
+            // there are no specific parameters, so when specified,
+            // it defaults to the workflow default parameters.
+            assert path("$outputDir/staramr/Listeria_results/Listeria_settings.staramr.txt").exists()
+            def listeria_settings = new File("$outputDir/staramr/Listeria_results/Listeria_settings.staramr.txt")
+            def listeria_cmd = listeria_settings.readLines().get(0)
+            assert listeria_cmd == "command_line                  = /usr/local/bin/staramr search --minimum-contig-length 300 --minimum-N50-value 10000 --minimum-contig-length 300 --unacceptable-number-contigs 1000 --pid-threshold 98 --percent-length-overlap-plasmidfinder 60 --genome-size-lower-bound 4000000 --genome-size-upper-bound 6000000 --percent-length-overlap-resfinder 60 --percent-length-overlap-pointfinder 95 --nprocs 1 -o Listeria_results Listeria.fasta"
+        }
+    }
 }

@@ -171,6 +171,27 @@ nextflow run main.nf --outdir ./results --input samplesheet.csv --pid_threshold 
 | `no_exclude_genes`                     | Disable the default exclusion of some genes from ResFinder/PointFinder/PlasmidFinder **Default:** False                                                                                                                                              |
 | `exclude_negatives`                    | Exclude negative results (those susceptible to antimicrobials) **Default:** False                                                                                                                                                                    |
 | `exclude_resistance_phenotypes`        | Exclude predicted antimicrobial resistances **Default:** False                                                                                                                                                                                       |
+| `species_override_parameter`           | Used to allow users to override genus specific parameter defaults. **Default:** True                                                                                                                                                                                        |
+
+### Genus specific settings
+
+If `species_override_parameter = true` then genus-specific settings are used when the `species` column of the sample sheet contains any of the following genera:
+
+```
+genus_list = ['salmonella', 'campylobacter', 'escherichia', 'shigella']
+```
+
+#### Salmonella, Shigella, or Escherichia
+- Lower bound for our genome size for quality metrics = 4,000,000
+- Upper bound for our genome size for quality metrics = 6,700,000 
+- Percent length overlap of BLAST hit for ResFinder Database = 52
+- PointFinder Database = Salmonella or PointFinder Database = E.coli
+#### Campylobacter
+- Lower bound for our genome size for quality metrics = 1,250,000
+- Upper bound for our genome size for quality metrics = 2,500,000
+- Percent length overlap of BLAST hit for ResFinder Database = 52 
+- Percent length overlap of BLAST hit for PointFinder Database = 58
+- PointFinder Database = Campylobacter
 
 ### Nextflow
 

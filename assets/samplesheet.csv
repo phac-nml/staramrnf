@@ -1,5 +1,3 @@
 sample,sample_name,contigs,species
-GCA_000008105,A 1#,https://github.com/phac-nml/staramrnf/raw/dev/tests/genomes/salmonella/GCA_000008105.1_ASM810v1_genomic.fna.gz,Salmonella
-GCA_000947975,B2,https://github.com/phac-nml/staramrnf/raw/dev/tests/genomes/ecoli/GCA_000947975.1_ASM94797v1_genomic.fna.gz,Escherichia coli
-GCF_000196035,B2,https://github.com/phac-nml/staramrnf/raw/dev/tests/genomes/listeria/GCF_000196035.1_ASM19603v1_genomic.fna,Listeria monocytogenes
-GCF_000196035_B,,https://github.com/phac-nml/staramrnf/raw/dev/tests/genomes/listeria/GCF_000196035.1_ASM19603v1_genomic.fna,Listeria monocytogenes
+SAMPLE1,SAMPLE_1,https://raw.githubusercontent.com/phac-nml/staramrnf/refs/heads/dev/tests/data/genes/gyrA-A67P.fasta,Salmonella
+SAMPLE2,SAMPLE_2,https://raw.githubusercontent.com/phac-nml/staramrnf/refs/heads/dev/tests/data/genes/beta-lactam-blaIMP-42-mut-2.fasta,

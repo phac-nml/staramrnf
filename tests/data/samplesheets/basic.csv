@@ -1,0 +1,3 @@
+sample,sample_name,contigs,species
+SAMPLE1,SAMPLE_1,https://raw.githubusercontent.com/phac-nml/staramrnf/refs/heads/update/0.12.3/tests/data/genes/gyrA-A67P.fasta,Salmonella
+SAMPLE2,SAMPLE_2,https://raw.githubusercontent.com/phac-nml/staramrnf/refs/heads/update/0.12.3/tests/data/genes/beta-lactam-blaIMP-42-mut-2.fasta,

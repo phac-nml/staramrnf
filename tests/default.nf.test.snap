@@ -7,10 +7,10 @@
                     "yaml": "6.0"
                 },
                 "STARAMR_SEARCH": {
-                    "staramr": "0.12.2"
+                    "staramr": "0.12.3"
                 },
                 "Workflow": {
-                    "phac-nml/staramrnf": "0.3.3"
+                    "phac-nml/staramrnf": "0.4.0"
                 }
             },
             [
@@ -61,18 +61,18 @@
                 "staramr/GCF_000196035_B_results/GCF_000196035_B_summary.staramr.tsv"
             ],
             [
-                "A_1__detailed_summary.staramr.tsv:md5,cb909766c34cc4d608a55b2dab4d5527",
+                "A_1__detailed_summary.staramr.tsv:md5,fe34ec1e2bc594637701b5614f76e00b",
                 "A_1__mlst.staramr.tsv:md5,175670a7c8fc2fd953a81ac99b1a6e6b",
                 "A_1__plasmidfinder.staramr.tsv:md5,d2d72406cca5e1f166dcb24d2507537d",
                 "A_1__pointfinder.staramr.tsv:md5,5f3bbf121a668a170357af254c117e15",
-                "A_1__resfinder.staramr.tsv:md5,77de8d59a2e283a30da61eca274e8e09",
-                "A_1__summary.staramr.tsv:md5,959571505b0ae540b4179f204d1e6dd6",
+                "A_1__resfinder.staramr.tsv:md5,90ce1d8818cf06074a062cfa3d1dca08",
+                "A_1__summary.staramr.tsv:md5,c718aa5323228f9e4263b9200ae9b3eb",
                 "B2_GCF_000196035_detailed_summary.staramr.tsv:md5,997513a5641b4bf3d0f0bed3251dc12a",
                 "B2_GCF_000196035_mlst.staramr.tsv:md5,cc77e22bfc4b91aad5c1a82e79b30986",
                 "B2_GCF_000196035_plasmidfinder.staramr.tsv:md5,06f38f23d6be0fb32bf66d31a517d78c",
                 "B2_GCF_000196035_resfinder.staramr.tsv:md5,eddb40d436128595e7ac5c91fcb2bda0",
                 "B2_GCF_000196035_summary.staramr.tsv:md5,b818d2eead6dfd127aa5644bc1ac64bc",
-                "B2_detailed_summary.staramr.tsv:md5,4afce7dd1637d3d5076b7123d8a30ca0",
+                "B2_detailed_summary.staramr.tsv:md5,0cbc7e1a81c019b4c6d9b4f69c3379a5",
                 "B2_mlst.staramr.tsv:md5,bbe1213eb4f9d2b044ee26ea17df8826",
                 "B2_plasmidfinder.staramr.tsv:md5,02503f0dca5bf6f33215215173d0c910",
                 "B2_pointfinder.staramr.tsv:md5,9baf996c113fcc9bbf007ef4085d5228",
@@ -86,9 +86,9 @@
             ]
         ],
         "meta": {
-            "nf-test": "0.9.2",
-            "nextflow": "24.10.6"
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
         },
-        "timestamp": "2026-05-04T13:25:11.110240112"
+        "timestamp": "2026-07-10T09:03:16.964204687"
     }
 }
