@@ -1,6 +1,8 @@
 sample,contigs,species
 Salmonella,https://github.com/phac-nml/staramrnf/raw/dev/tests/data/genomes/salmonella/GCA_000008105.1_ASM810v1_genomic.fna.gz,Salmonella
 Escherichaia,https://github.com/phac-nml/staramrnf/raw/dev/tests/data/genomes/ecoli/GCA_000947975.1_ASM94797v1_genomic.fna.gz,Escherichia coli
+Campylobacter,https://github.com/phac-nml/staramrnf/raw/dev/tests/data/genomes/listeria/GCF_000196035.1_ASM19603v1_genomic.fna,Campylobacter
+Shigella,https://github.com/phac-nml/staramrnf/raw/dev/tests/data/genomes/listeria/GCF_000196035.1_ASM19603v1_genomic.fna,Shigella
 Listeria,https://github.com/phac-nml/staramrnf/raw/dev/tests/data/genomes/listeria/GCF_000196035.1_ASM19603v1_genomic.fna,Listeria monocytogenes
 Salmonella_default,https://github.com/phac-nml/staramrnf/raw/dev/tests/data/genomes/salmonella/GCA_000008105.1_ASM810v1_genomic.fna.gz,
 Escherichaia_default,https://github.com/phac-nml/staramrnf/raw/dev/tests/data/genomes/ecoli/GCA_000947975.1_ASM94797v1_genomic.fna.gz,
