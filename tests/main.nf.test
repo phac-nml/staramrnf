@@ -189,7 +189,9 @@ nextflow_pipeline {
 
         // Sample Sheet:
         // 1: Salmonella (specified) -> Salmonella
-        // 2: Escherichaia (specified) -> E. coli
+        // 2: Escherichaia (specified) -> Escherichia
+        // 3: Campylobacter (specified) -> Campylobacter
+        // 4: Shigella (specified) -> Shigella (no pointfinder database)
         // 3: Listeria (specified) -> DEFAULT
         // 4: Salmonella_default (unspecified/blank/default) -> DEFAULT
         // 5: Escherichaia_default (unspecified/blank/default) -> DEFAULT
@@ -315,6 +317,21 @@ nextflow_pipeline {
             def listeria_settings = new File("$outputDir/staramr/Listeria_results/Listeria_settings.staramr.txt")
             def listeria_cmd = listeria_settings.readLines().get(0)
             assert listeria_cmd == "command_line                  = /usr/local/bin/staramr search --minimum-contig-length 300 --minimum-N50-value 10000 --minimum-contig-length 300 --unacceptable-number-contigs 1000 --pid-threshold 98 --percent-length-overlap-plasmidfinder 60 --genome-size-lower-bound 4000000 --genome-size-upper-bound 6000000 --percent-length-overlap-resfinder 60 --percent-length-overlap-pointfinder 95 --nprocs 1 -o Listeria_results Listeria.fasta"
+
+            // Campylobacter (specified)
+            assert path("$outputDir/staramr/Campylobacter_results/Campylobacter_settings.staramr.txt").exists()
+            def campy_settings = new File("$outputDir/staramr/Campylobacter_results/Campylobacter_settings.staramr.txt")
+            def campy_cmd = campy_settings.readLines().get(0)
+            assert campy_cmd == "command_line                  = /usr/local/bin/staramr search --pointfinder-organism campylobacter --minimum-contig-length 300 --minimum-N50-value 10000 --minimum-contig-length 300 --unacceptable-number-contigs 1000 --pid-threshold 98 --percent-length-overlap-plasmidfinder 60 --genome-size-lower-bound 1250000 --genome-size-upper-bound 2500000 --percent-length-overlap-resfinder 52 --percent-length-overlap-pointfinder 58 --nprocs 1 -o Campylobacter_results Campylobacter.fasta"
+
+            // Shigella (specified)
+            // Modified genome size and % overlap with resfinder and pointfinder
+            // pointfinder_database should not be selected
+            assert path("$outputDir/staramr/Shigella_results/Shigella_settings.staramr.txt").exists()
+            def shigella_settings = new File("$outputDir/staramr/Shigella_results/Shigella_settings.staramr.txt")
+            def shigella_cmd = shigella_settings.readLines().get(0)
+            assert shigella_cmd == "command_line                  = /usr/local/bin/staramr search --minimum-contig-length 300 --minimum-N50-value 10000 --minimum-contig-length 300 --unacceptable-number-contigs 1000 --pid-threshold 98 --percent-length-overlap-plasmidfinder 60 --genome-size-lower-bound 4000000 --genome-size-upper-bound 6700000 --percent-length-overlap-resfinder 52 --percent-length-overlap-pointfinder 95 --nprocs 1 -o Shigella_results Shigella.fasta"
+
         }
     }
 }
