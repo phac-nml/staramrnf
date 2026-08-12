@@ -3,6 +3,11 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+
+### Added
+
+- A StarAMRNF-specific JSON output schema that the nf-iridanext plugin will automatically validate its output against. Currently, this schema enforcement is only enabled during testing. [PR 47](https://github.com/phac-nml/staramrnf/pull/47)
 
 ## [0.4.1] - 2026-07-15
 
