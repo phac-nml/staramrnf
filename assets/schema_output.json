@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://raw.githubusercontent.com/phac-nml/fastchmatchirida/main/assets/schema_output.json",
+    "$id": "https://raw.githubusercontent.com/phac-nml/staramrnf/main/assets/schema_output.json",
     "title": "StarAMR Output Schema",
     "description": "The StarAMR-specific schema used for validating IRIDA Next JSON output data",
     "type": "object",

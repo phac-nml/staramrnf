@@ -8,6 +8,7 @@ nextflow_pipeline {
 
         when {
             params {
+                input = "$baseDir/tests/data/samplesheets/basic.csv"
                 outdir = "$outputDir"
             }
         }
