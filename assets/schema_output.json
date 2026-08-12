@@ -94,7 +94,8 @@
                                     }
                                 },
                                 "additionalProperties": false
-                            }
+                            },
+                            "uniqueItems": true
                         }
                     }
                 }
