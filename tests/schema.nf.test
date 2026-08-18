@@ -1,0 +1,26 @@
+nextflow_pipeline {
+
+    name "Schema Testing"
+    script "main.nf"
+
+    test("Schema - Bad Metadata") {
+        tag "schema_bad_metadata"
+        config "${projectDir}/tests/configs/iridanext_bad_metadata.config"
+
+        when {
+            params {
+                input = "$baseDir/tests/data/samplesheets/basic.csv"
+                outdir = "results"
+            }
+        }
+
+        then {
+            assert workflow.success
+
+            def combined_stdout = workflow.stdout.join(",")
+
+            assert combined_stdout.contains("JSON did not match schema")
+            assert combined_stdout.contains('metadata/samples/SAMPLE2/StarAMR+Quality+Module+WRONG_NAME failed')
+        }
+    }
+}

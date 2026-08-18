@@ -1,0 +1,148 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://raw.githubusercontent.com/phac-nml/staramrnf/main/assets/schema_output.json",
+    "title": "StarAMR Output Schema",
+    "description": "The StarAMR-specific schema used for validating IRIDA Next JSON output data",
+    "type": "object",
+    "properties": {
+        "files": {
+            "type": "object",
+            "properties": {
+                "global": {
+                    "type": "array",
+                    "items": {
+                        "properties": {
+                            "path": {
+                                "anyOf": [
+                                    {
+                                        "pattern": "^.*pipeline_info/.*software_versions.yml$",
+                                        "description": "Software versions used by the pipeline."
+                                    },
+                                    {
+                                        "pattern": "^.*csvtk/.*merged_resfinder.staramr.tsv$",
+                                        "description": "Combined ResFinder results from all input samples."
+                                    },
+                                    {
+                                        "pattern": "^.*csvtk/.*merged_pointfinder.staramr.tsv$",
+                                        "description": "Combined PointFinder results from all input samples."
+                                    },
+                                    {
+                                        "pattern": "^.*csvtk/.*merged_plasmidfinder.staramr.tsv$",
+                                        "description": "Combined PlasmidFinder results from all input samples."
+                                    },
+                                    {
+                                        "pattern": "^.*csvtk/.*merged_detailed_summary.staramr.tsv",
+                                        "description": "Combined detailed summary of AMR results from all input samples."
+                                    },
+                                    {
+                                        "pattern": "^.*csvtk/.*merged_mlst.staramr.tsv$",
+                                        "description": "Combined MLST results from all input samples."
+                                    },
+                                    {
+                                        "pattern": "^.*csvtk/.*merged_summary.staramr.tsv$",
+                                        "description": "Combined StarAMR summary results from all input samples."
+                                    }
+                                ]
+                            }
+                        },
+                        "additionalProperties": false
+                    },
+                    "uniqueItems": true
+                },
+                "samples": {
+                    "type": "object",
+                    "patternProperties": {
+                        "^.*$": {
+                            "type": "array",
+                            "items": {
+                                "properties": {
+                                    "path": {
+                                        "anyOf": [
+                                            {
+                                                "pattern": "^.*staramr/.*_results/.*_settings.staramr.txt$",
+                                                "description": "The StarAMR-specific command-line parameters, settings, and databases used for the sample."
+                                            },
+                                            {
+                                                "pattern": "^.*staramr/.*_results/.*_mlst.staramr.tsv$",
+                                                "description": "The MLST results for the sample."
+                                            },
+                                            {
+                                                "pattern": "^.*staramr/.*_results/.*_plasmidfinder.staramr.tsv$",
+                                                "description": "The PlasmidFinder results for the sample."
+                                            },
+                                            {
+                                                "pattern": "^.*staramr/.*_results/.*_resfinder.staramr.tsv$",
+                                                "description": "The ResFinder results for the sample."
+                                            },
+                                            {
+                                                "pattern": "^.*staramr/.*_results/.*_pointfinder.staramr.tsv$",
+                                                "description": "The PointFinder results for the sample."
+                                            },
+                                            {
+                                                "pattern": "^.*staramr/.*_results/.*_detailed_summary.staramr.tsv$",
+                                                "description": "The detailed summary of StarAMR results for the sample."
+                                            },
+                                            {
+                                                "pattern": "^.*staramr/.*_results/.*_summary.staramr.tsv$",
+                                                "description": "The summary of StarAMR results for the sample."
+                                            },
+                                            {
+                                                "pattern": "^.*staramr/.*_results/.*_results.staramr.xlsx$",
+                                                "description": "An XLSX-formatted summary of StarAMR results for the sample."
+                                            }
+                                        ]
+                                    }
+                                },
+                                "additionalProperties": false
+                            },
+                            "uniqueItems": true
+                        }
+                    }
+                }
+            }
+        },
+        "metadata": {
+            "type": "object",
+            "properties": {
+                "samples": {
+                    "type": "object",
+                    "patternProperties": {
+                        "^.*$": {
+                            "type": "object",
+                            "properties": {
+                                "StarAMR Quality Module": {
+                                    "description": "Whether or not the sample passed of failed the quality evaluation."
+                                },
+                                "StarAMR Genotype": {
+                                    "description": "The AMR genotype of the sample."
+                                },
+                                "StarAMR Predicted Phenotype": {
+                                    "description": "The StarAMR-predicted phenotype for the sample."
+                                },
+                                "StarAMR CGE Predicted Phenotype": {
+                                    "description": "The CGE-predicted phenotype for the sample."
+                                },
+                                "StarAMR Plasmid": {
+                                    "description": "Plasmid types that were found for the sample."
+                                },
+                                "StarAMR Scheme": {
+                                    "description": "The MLST scheme used."
+                                },
+                                "StarAMR Sequence Type": {
+                                    "description": "The sequence type that's assigned when combining all allele types."
+                                },
+                                "StarAMR Genome Length": {
+                                    "description": "The genome length of the sample."
+                                },
+                                "StarAMR N50 value": {
+                                    "description": "The N50 value of the sample."
+                                }
+                            },
+                            "additionalProperties": false
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
