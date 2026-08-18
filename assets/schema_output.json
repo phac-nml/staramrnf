@@ -43,9 +43,9 @@
                                         "description": "Combined StarAMR summary results from all input samples."
                                     }
                                 ]
-                            },
-                            "additionalProperties": false
-                        }
+                            }
+                        },
+                        "additionalProperties": false
                     },
                     "uniqueItems": true
                 },
