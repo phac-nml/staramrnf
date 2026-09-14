@@ -114,22 +114,28 @@
                                     "description": "Whether or not the sample passed of failed the quality evaluation."
                                 },
                                 "StarAMR Genotype": {
-                                    "description": "The AMR genotype of the sample."
+                                    "description": "The AMR genotype of the sample.",
+                                    "type": "string"
                                 },
                                 "StarAMR Predicted Phenotype": {
-                                    "description": "The StarAMR-predicted phenotype for the sample."
+                                    "description": "The StarAMR-predicted phenotype for the sample.",
+                                    "type": "string"
                                 },
                                 "StarAMR CGE Predicted Phenotype": {
-                                    "description": "The CGE-predicted phenotype for the sample."
+                                    "description": "The CGE-predicted phenotype for the sample.",
+                                    "type": "string"
                                 },
                                 "StarAMR Plasmid": {
-                                    "description": "Plasmid types that were found for the sample."
+                                    "description": "Plasmid types that were found for the sample.",
+                                    "type": "string"
                                 },
                                 "StarAMR Scheme": {
-                                    "description": "The MLST scheme used."
+                                    "description": "The MLST scheme used.",
+                                    "type": "string"
                                 },
                                 "StarAMR Sequence Type": {
-                                    "description": "The sequence type that's assigned when combining all allele types."
+                                    "description": "The sequence type that's assigned when combining all allele types.",
+                                    "type": "string"
                                 },
                                 "StarAMR Genome Length": {
                                     "description": "The genome length of the sample."
