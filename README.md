@@ -72,6 +72,25 @@ If `sample_name` value is left blank for a sample, then the `sample` value will 
 
 An [example samplesheet](assets/samplesheet.csv) has been provided with the pipeline.
 
+Alternatively, a JSON-formatted sample sheet may be provided:
+
+```json
+[
+  {
+    "sample": "SAMPLE1",
+    "sample_name": "SAMPLE_1",
+    "contigs": "sample1.fastq.gz",
+    "species": "Salmonella"
+  },
+  {
+    "sample": "SAMPLE2",
+    "sample_name": "SAMPLE_2",
+    "contigs": "sample2.fastq.gz",
+    "species": "Escherichia coli"
+  }
+]
+```
+
 Note: Validated Pointfinder organisms for `species` include: Enterococcus faecalis, Helicobacter pylori, Salmonella, Enterococcus faecium, Escherichia coli, Campylobacter. Accepted but unvalidated species: Klebsiella, Staphylococcus aureus, Mycobacterium tuberculosis, Neisseria gonorrhoeae, Plasmodium falciparum.
 
 ## Output

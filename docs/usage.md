@@ -25,7 +25,7 @@ SAMPLE2,A1,sample2fastq.gz,Escherichia coli
 SAMPLE3,,sample3.fastq.gz,
 ```
 
-| Column        | Description                                                                                          |
+| Column / Field        | Description                                                                                          |
 | ------------- | ---------------------------------------------------------------------------------------------------- |
 | `sample`      | Sample key. Samples should be unique within a samplesheet. **Required**                              |
 | `sample_name` | Sample name used in outputs (filenames and sample names). Does not need to be unique.                |
@@ -34,7 +34,24 @@ SAMPLE3,,sample3.fastq.gz,
 
 If `sample_name` value is left blank for a sample, then the `sample` value will replace the value. To ensure that all `sample_name` values are unique, `sample` will be suffixed to `sample_name` that are not unique. Non-alphanumeric characters (excluding `_`,`-`,`.`) will be replaced with `"_"`.
 
-An [example samplesheet](../assets/samplesheet.csv) has been provided with the pipeline.
+An [example samplesheet](../assets/samplesheet.csv) has been provided with the pipeline. Alternatively, a JSON-formatted sample sheet may be provided:
+
+```json
+[
+  {
+    "sample": "SAMPLE1",
+    "sample_name": "SAMPLE_1",
+    "contigs": "sample1.fastq.gz",
+    "species": "Salmonella"
+  },
+  {
+    "sample": "SAMPLE2",
+    "sample_name": "SAMPLE_2",
+    "contigs": "sample2.fastq.gz",
+    "species": "Escherichia coli"
+  }
+]
+```
 
 Note: Validated Pointfinder organisms for `species` include: Enterococcus faecalis, Helicobacter pylori, Salmonella, Enterococcus faecium, Escherichia coli, Campylobacter. Accepted but unvalidated species: Klebsiella, Staphylococcus aureus, Mycobacterium tuberculosis, Neisseria gonorrhoeae, Plasmodium falciparum.
 
