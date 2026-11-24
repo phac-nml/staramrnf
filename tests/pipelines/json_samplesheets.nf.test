@@ -9,10 +9,11 @@ nextflow_pipeline {
         // SAMPLE2: The ResFinder mutation blaIMP-42 is identified.
 
         tag "pipeline_basic"
+        tag "json_samplesheet"
 
         when {
             params {
-                input = "$baseDir/tests/data/samplesheets/basic.csv"
+                input = "$baseDir/tests/data/samplesheets/basic.json"
                 outdir = "$outputDir"
             }
         }
@@ -97,10 +98,11 @@ nextflow_pipeline {
         // SAMPLE4: "" (missing) (Resfinder FloR_4_CP136914 phenicol)
 
         tag "pipeline_sample_name"
+        tag "json_samplesheet"
 
         when {
             params {
-                input = "$baseDir/tests/data/samplesheets/sample_name.csv"
+                input = "$baseDir/tests/data/samplesheets/sample_name.json"
                 outdir = "$outputDir"
             }
         }
@@ -210,10 +212,11 @@ nextflow_pipeline {
         // rather than trying to auto-detect the species.
 
         tag "pipeline_species"
+        tag "json_samplesheet"
 
         when {
             params {
-                input = "$baseDir/tests/data/samplesheets/species.csv"
+                input = "$baseDir/tests/data/samplesheets/species.json"
                 outdir = "$outputDir"
             }
         }

@@ -1,0 +1,37 @@
+[
+  {
+    "sample": "Salmonella",
+    "contigs": "https://github.com/phac-nml/staramrnf/raw/dev/tests/data/genomes/salmonella/GCA_000008105.1_ASM810v1_genomic.fna.gz",
+    "species": "Salmonella"
+  },
+  {
+    "sample": "Escherichaia",
+    "contigs": "https://github.com/phac-nml/staramrnf/raw/dev/tests/data/genomes/ecoli/GCA_000947975.1_ASM94797v1_genomic.fna.gz",
+    "species": "Escherichia coli"
+  },
+  {
+    "sample": "Campylobacter",
+    "contigs": "https://github.com/phac-nml/staramrnf/raw/dev/tests/data/genomes/listeria/GCF_000196035.1_ASM19603v1_genomic.fna",
+    "species": "Campylobacter"
+  },
+  {
+    "sample": "Shigella",
+    "contigs": "https://github.com/phac-nml/staramrnf/raw/dev/tests/data/genomes/listeria/GCF_000196035.1_ASM19603v1_genomic.fna",
+    "species": "Shigella"
+  },
+  {
+    "sample": "Listeria",
+    "contigs": "https://github.com/phac-nml/staramrnf/raw/dev/tests/data/genomes/listeria/GCF_000196035.1_ASM19603v1_genomic.fna",
+    "species": "Listeria monocytogenes"
+  },
+  {
+    "sample": "Salmonella_default",
+    "contigs": "https://github.com/phac-nml/staramrnf/raw/dev/tests/data/genomes/salmonella/GCA_000008105.1_ASM810v1_genomic.fna.gz",
+    "species": ""
+  },
+  {
+    "sample": "Escherichaia_default",
+    "contigs": "https://github.com/phac-nml/staramrnf/raw/dev/tests/data/genomes/ecoli/GCA_000947975.1_ASM94797v1_genomic.fna.gz",
+    "species": ""
+  }
+]
