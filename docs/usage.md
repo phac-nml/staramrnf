@@ -25,12 +25,12 @@ SAMPLE2,A1,sample2fastq.gz,Escherichia coli
 SAMPLE3,,sample3.fastq.gz,
 ```
 
-| Column / Field        | Description                                                                                          |
-| ------------- | ---------------------------------------------------------------------------------------------------- |
-| `sample`      | Sample key. Samples should be unique within a samplesheet. **Required**                              |
-| `sample_name` | Sample name used in outputs (filenames and sample names). Does not need to be unique.                |
-| `contigs`     | Full path to genome contig(s). Uncompressed or gzipped (.gz) fasta file (fna,fa,fasta). **Required** |
-| `species`     | Species of genome (see accepted Pointfinder organisms below). **Optional**                           |
+| Column / Field | Description                                                                                          |
+| -------------- | ---------------------------------------------------------------------------------------------------- |
+| `sample`       | Sample key. Samples should be unique within a samplesheet. **Required**                              |
+| `sample_name`  | Sample name used in outputs (filenames and sample names). Does not need to be unique.                |
+| `contigs`      | Full path to genome contig(s). Uncompressed or gzipped (.gz) fasta file (fna,fa,fasta). **Required** |
+| `species`      | Species of genome (see accepted Pointfinder organisms below). **Optional**                           |
 
 If `sample_name` value is left blank for a sample, then the `sample` value will replace the value. To ensure that all `sample_name` values are unique, `sample` will be suffixed to `sample_name` that are not unique. Non-alphanumeric characters (excluding `_`,`-`,`.`) will be replaced with `"_"`.
 
