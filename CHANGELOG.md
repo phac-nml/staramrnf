@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - A StarAMRNF-specific JSON output schema that the nf-iridanext plugin will automatically validate its output against. Currently, this schema enforcement is only enabled during testing. [PR 47](https://github.com/phac-nml/staramrnf/pull/47)
-- Added support for JSON-formated sample sheets. [PR #48](https://github.com/phac-nml/staramrnf/pull/48)
+- Added support for JSON-formatted sample sheets. [PR #48](https://github.com/phac-nml/staramrnf/pull/48)
 
 ## [0.4.1] - 2026-07-15
 
