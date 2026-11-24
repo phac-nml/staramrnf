@@ -4,14 +4,13 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { paramsSummaryLog; paramsSummaryMap; fromSamplesheet  } from 'plugin/nf-validation'
+include { samplesheetToList } from 'plugin/nf-schema'
 
 def logo = NfcoreTemplate.logo(workflow, params.monochrome_logs)
 def citation = '\n' + WorkflowMain.citation(workflow) + '\n'
-def summary_params = paramsSummaryMap(workflow)
 
 // Print parameter summary log to screen
-log.info logo + paramsSummaryLog(workflow) + citation
+log.info logo + citation
 
 WorkflowStaramr.initialise(params, log)
 
@@ -58,7 +57,7 @@ workflow STARAMR {
     // Create a new channel of metadata from a sample sheet
     // NB: `input` corresponds to `params.input` and associated sample sheet schema
 
-    ch_input = Channel.fromSamplesheet("input")
+    ch_input = Channel.fromList(samplesheetToList(params.input, "assets/schema_input.json"))
         .map { meta, contigs ->
             // Set meta.id to meta.irida_id if sample_name is not provided in the samplesheet
             if (!meta.id) {

@@ -1,0 +1,14 @@
+[
+  {
+    "sample": "SAMPLE1",
+    "sample_name": "SAMPLE_1",
+    "contigs": "https://raw.githubusercontent.com/phac-nml/staramrnf/refs/heads/dev/tests/data/genes/gyrA-A67P.fasta",
+    "species": "Salmonella"
+  },
+  {
+    "sample": "SAMPLE2",
+    "sample_name": "SAMPLE_2",
+    "contigs": "https://raw.githubusercontent.com/phac-nml/staramrnf/refs/heads/dev/tests/data/genes/beta-lactam-blaIMP-42-mut-2.fasta",
+    "species": ""
+  }
+]

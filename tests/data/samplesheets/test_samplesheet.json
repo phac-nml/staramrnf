@@ -1,0 +1,26 @@
+[
+  {
+    "sample": "GCA_000008105",
+    "sample_name": "A 1#",
+    "contigs": "https://github.com/phac-nml/staramrnf/raw/dev/tests/data/genomes/salmonella/GCA_000008105.1_ASM810v1_genomic.fna.gz",
+    "species": "Salmonella"
+  },
+  {
+    "sample": "GCA_000947975",
+    "sample_name": "B2",
+    "contigs": "https://github.com/phac-nml/staramrnf/raw/dev/tests/data/genomes/ecoli/GCA_000947975.1_ASM94797v1_genomic.fna.gz",
+    "species": "Escherichia coli"
+  },
+  {
+    "sample": "GCF_000196035",
+    "sample_name": "B2",
+    "contigs": "https://github.com/phac-nml/staramrnf/raw/dev/tests/data/genomes/listeria/GCF_000196035.1_ASM19603v1_genomic.fna",
+    "species": "Listeria monocytogenes"
+  },
+  {
+    "sample": "GCF_000196035_B",
+    "sample_name": "",
+    "contigs": "https://github.com/phac-nml/staramrnf/raw/dev/tests/data/genomes/listeria/GCF_000196035.1_ASM19603v1_genomic.fna",
+    "species": "Listeria monocytogenes"
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "sample": "SAMPLE1",
+    "sample_name": "A 1#",
+    "contigs": "https://raw.githubusercontent.com/phac-nml/staramrnf/refs/heads/dev/tests/data/genes/gyrA-A67P.fasta",
+    "species": "Salmonella"
+  },
+  {
+    "sample": "SAMPLE2",
+    "sample_name": "B2",
+    "contigs": "https://raw.githubusercontent.com/phac-nml/staramrnf/refs/heads/dev/tests/data/genes/beta-lactam-blaIMP-42-mut-2.fasta",
+    "species": ""
+  },
+  {
+    "sample": "SAMPLE3",
+    "sample_name": "B2",
+    "contigs": "https://raw.githubusercontent.com/phac-nml/staramrnf/refs/heads/dev/tests/data/genes/CmlA7_1_JQ639792.fasta",
+    "species": ""
+  },
+  {
+    "sample": "SAMPLE4",
+    "sample_name": "",
+    "contigs": "https://raw.githubusercontent.com/phac-nml/staramrnf/refs/heads/dev/tests/data/genes/FloR_4_CP136914.fasta",
+    "species": ""
+  }
+]
